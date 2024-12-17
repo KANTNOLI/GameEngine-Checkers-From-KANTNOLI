@@ -30,7 +30,7 @@ const height = window.innerHeight;
 let board = await fetch("/api/board/default").then((res) => res.json());
 let removeVariate = [];
 
-const loader = new GLTFLoader();
+const modelLoader = new GLTFLoader();
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x303030);
 
@@ -40,13 +40,16 @@ const lighting = defaultLightSetup(scene, "epic");
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(width, height);
 renderer.shadowMap.enabled = true;
+//BasicShadowMap low
+//PCFShadowMap norm
+//PCFSoftShadowMap super
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
 // дефолт рендеры по типу сцены, которые по сути пока динамично не изменяются и скорее всего не будут
 const renderObj = defaultSetup(renderer, scene, board);
 board = renderObj.board;
-boardSetup(loader, scene, renderObj.camera, lighting, renderObj.controls);
+boardSetup(modelLoader, scene, renderObj.camera, lighting, renderObj.controls);
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
