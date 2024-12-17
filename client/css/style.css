@@ -1,0 +1,18 @@
+*{
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    background-color: rgb(61, 61, 61);
+}
+
+#chat{
+    padding: 10px;
+    color: white;
+    position: absolute;
+    width: 200px;
+    height: 400px;
+    background-color: rgba(0, 0, 0, 0.397);
+}

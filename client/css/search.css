@@ -1,0 +1,143 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  font-family: "Parkinsans", sans-serif;
+  color: white;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0 10px 0px black;
+  border-radius: 20px;
+  padding: 20px;
+  width: 300px;
+  height: 500px;
+  background-color: rgb(121, 121, 121);
+
+  margin-right: 50px;
+  margin-left: 50px;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+input {
+  border-radius: 5px;
+  padding: 5px;
+  margin-top: 10px;
+  width: 90%;
+  height: 20px;
+
+  transition: 0.5s ease-in-out;
+}
+
+nav {
+  overflow: auto;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 25px;
+  width: calc(90% - 10px);
+  height: 75%;
+  background-color: rgb(155, 155, 155);
+}
+
+.searchGame:first-child {
+  margin: 0;
+}
+
+.searchGame {
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  height: 30px;
+  margin-top: 5px;
+  cursor: pointer;
+
+  transition: 0.1s ease-in-out;
+}
+
+.searchGame:hover {
+  background-color: rgb(138, 138, 138);
+}
+
+.none {
+  display: flex;
+  display: none;
+}
+
+p {
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+.side {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.side span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.side span input {
+  margin: 0;
+}
+
+.online {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px 0px black;
+  width: 150px;
+  height: 35px;
+  border-radius: 10px;
+  background-color: rgb(121, 121, 121);
+  font-weight: bold;
+}
+
+button {
+  cursor: pointer;
+  font-size: 16px;
+  position: relative;
+  top: 100px;
+  border-radius: 10px;
+  width: 120px;
+  height: 40px;
+}
+
+.warn {
+  background-color: rgba(255, 136, 0, 0.479);
+}
+
+#loading {
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 150px;
+  height: 150px;
+  z-index: 1;
+}
+
+#loading img {
+  width: 100%;
+  height: 100%;
+}

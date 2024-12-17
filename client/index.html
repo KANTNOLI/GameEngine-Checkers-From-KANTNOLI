@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Search Game</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/search.css" />
+  </head>
+
+  <body>
+    <div class="online">Online: 0</div>
+
+    <div id="loading" class="none">
+      <img src="/img/await.gif" alt="" />
+      <p id="createROOM">room: await</p>
+      <p id="createNAME">await</p>
+    </div>
+
+    <section id="SectChooseGame">
+      <h1>Choose game</h1>
+      <input type="text" id="search" placeholder="search game" />
+
+      <input type="text" id="login" placeholder="nickname" required />
+
+      <nav></nav>
+    </section>
+
+    <section id="SectCreateRoom">
+      <h1>Create game</h1>
+      <p>Room Name</p>
+      <input type="text" id="roomName" />
+      <p>NickName</p>
+      <input type="text" id="nickname" />
+      <p>Side</p>
+      <div class="side">
+        <span>White <input type="radio" name="side" value="white" /></span>
+        <span>Black <input type="radio" name="side" value="black" /></span>
+        <span>Random <input type="radio" name="side" value="random" /></span>
+      </div>
+
+      <button>create</button>
+    </section>
+  </body>
+  <script type="module" src="/js/search.js"></script>
+</html>
