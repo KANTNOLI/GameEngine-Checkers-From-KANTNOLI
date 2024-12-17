@@ -1,4 +1,4 @@
-export const boardSetup = (loader, scene, camera, light, controls) => {
+export const boardSetup = (loader, scene, camera, lighting, controls) => {
   loader.load("models/chessboard.glb", (gltf) => {
     gltf.scene.position.y = -0.0777;
     gltf.scene.position.x = 0.115;
@@ -11,8 +11,10 @@ export const boardSetup = (loader, scene, camera, light, controls) => {
       }
     });
     controls.target.copy(gltf.scene.position);
+    
     camera.lookAt(gltf.scene.position);
-    light.lookAt(gltf.scene.position);
+    lighting.light.lookAt(gltf.scene.position);
+    lighting.backLight.lookAt(gltf.scene.position);
 
     scene.add(gltf.scene);
   });

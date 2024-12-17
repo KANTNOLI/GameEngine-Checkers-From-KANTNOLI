@@ -3,25 +3,25 @@ import { io } from "https://cdn.socket.io/4.8.1/socket.io.esm.min.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
-import { lightSetup } from "./Lighting/DefaultLightSetup.js";
+import { defaultLightSetup } from "./Lighting/DefaultLightSetup.js";
 import { boardSetup } from "./boardSetup.js";
 import { defaultSetup } from "./defaultSetup.js";
 import { motion } from "./motion.js";
 
-const LOCALSTORE_ID = "ID";
-const LOCALSTORE_ROOM_ID = "ROOM_ID";
+// const LOCALSTORE_ID = "ID";
+// const LOCALSTORE_ROOM_ID = "ROOM_ID";
 
 const socket = io("http://localhost:3000");
 
-console.log(localStorage.getItem(LOCALSTORE_ROOM_ID));
+// console.log(localStorage.getItem(LOCALSTORE_ROOM_ID));
 
-socket.on("test", (data) => {
-  let text = document.createElement("p");
-  text.innerText = data;
+// socket.on("test", (data) => {
+//   let text = document.createElement("p");
+//   text.innerText = data;
 
-  document.querySelector("#chat").append(text);
-  console.log(data);
-});
+//   document.querySelector("#chat").append(text);
+//   console.log(data);
+// });
 
 // для удобства
 const width = window.innerWidth;
@@ -34,7 +34,7 @@ const loader = new GLTFLoader();
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x303030);
 
-const light = lightSetup(scene);
+const lighting = defaultLightSetup(scene, "epic");
 
 // настройка окна
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -46,7 +46,7 @@ document.body.appendChild(renderer.domElement);
 // дефолт рендеры по типу сцены, которые по сути пока динамично не изменяются и скорее всего не будут
 const renderObj = defaultSetup(renderer, scene, board);
 board = renderObj.board;
-boardSetup(loader, scene, renderObj.camera, light, renderObj.controls);
+boardSetup(loader, scene, renderObj.camera, lighting, renderObj.controls);
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
