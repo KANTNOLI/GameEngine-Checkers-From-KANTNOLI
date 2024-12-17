@@ -50,3 +50,4 @@ export const DefaultLightSetup = (
 
   return light;
 };
+
