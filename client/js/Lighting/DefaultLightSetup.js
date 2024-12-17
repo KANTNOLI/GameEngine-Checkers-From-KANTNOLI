@@ -13,7 +13,7 @@ const setQualityLight = (light, backLight, size) => {
   backLight.shadow.mapSize.height = size;
 };
 
-export const defaultLightSetup = (
+export const DefaultLightSetup = (
   scene,
   quality = "medium",
   lightPos = { x: -2.5, y: 5, z: -2.5 },

@@ -22,18 +22,8 @@ const createElement = (cell, color, id, board, lineID, cellID) => {
   return { cylinder, board };
 };
 
-export const defaultSetup = (renderer, scene, board) => {
-  // типа для удобства
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-
-  // камера
-  const camera = new THREE.PerspectiveCamera(75, width / height, 0.01, 10);
-  camera.position.x = 0;
-  camera.position.y = 1.5;
-  camera.position.z = 1.5;
-
-  // чтобы можно было норм посмотреть доску
+export const defaultSetup = (renderer, scene, camera, board) => {
+  // чтобы можно было норм посмотреть доскуsaasdads
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.dampingFactor = 0.25;
@@ -47,24 +37,36 @@ export const defaultSetup = (renderer, scene, board) => {
       switch (cell.object) {
         case "white":
           counter++;
-          const elWhite = createElement(cell, cylMateWhite, counter, board, lineID, cellID)
-          board = elWhite.board
+          const elWhite = createElement(
+            cell,
+            cylMateWhite,
+            counter,
+            board,
+            lineID,
+            cellID
+          );
+          board = elWhite.board;
           scene.add(elWhite.cylinder);
           break;
         case "black":
           counter++;
-          const elblack = createElement(cell, cylMateBlack, counter, board, lineID, cellID)
-          board = elblack.board
+          const elblack = createElement(
+            cell,
+            cylMateBlack,
+            counter,
+            board,
+            lineID,
+            cellID
+          );
+          board = elblack.board;
           scene.add(elblack.cylinder);
           break;
       }
     });
   });
 
-
   return {
-    camera,
     controls,
-    board
+    board,
   };
 };
