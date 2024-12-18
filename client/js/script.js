@@ -26,7 +26,7 @@ const socket = io("http://localhost:3000");
 // });
 
 let gameArea = await fetch("/api/board/default").then((res) => res.json());
-let removeVariate = [];
+//let removeVariate = [];
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x303030);
@@ -35,17 +35,14 @@ const visualEngine = DefaultViEnConfig();
 const lighting = DefaultLightSetup(scene, "epic");
 const camera = DefaultCameraSettings();
 const playerControlls = DefaultOrbitControll(visualEngine, camera);
-console.log(gameArea);
 LoadCheckers(scene, gameArea); // передаем копию массива, по сути присваивать глупо?
-console.log(gameArea);
-
 
 boardSetup(scene, camera, lighting, playerControlls);
 
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-
 window.addEventListener("click", async (event) => {
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+
   event.preventDefault();
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
