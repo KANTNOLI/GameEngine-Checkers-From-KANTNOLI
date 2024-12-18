@@ -17,3 +17,5 @@ Engine (**Actual 0.6.4** && less) ->
 - **OtherScripts** - A module designed for separate scripts, so as not to create hundreds of modules. Renderings of elements can be stored there, for example, initial placement or conditionally mouse tracking. In short, everything that does not fit other modules goes there, if this function is not more important than, for example, light. (**1**)
 
 P.S. **Before the release of 1.0 or 2.0**, depending on the circumstances, most of the functions will be aimed specifically at my task. After that, the engine will be upgraded to the ability to create different other simple ones
+
+![image](https://github.com/user-attachments/assets/1d6c6177-5955-4d17-9984-c91758a4e62e)
