@@ -23,13 +23,6 @@ const createElement = (cell, color, id, board, lineID, cellID) => {
 };
 
 export const defaultSetup = (renderer, scene, camera, board) => {
-  // чтобы можно было норм посмотреть доскуsaasdads
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.25;
-  controls.enablePan = false;
-  controls.minPolarAngle = THREE.MathUtils.degToRad(30);
-  controls.maxPolarAngle = THREE.MathUtils.degToRad(70);
 
   let counter = -1;
   board.map((line, lineID) => {
@@ -66,7 +59,6 @@ export const defaultSetup = (renderer, scene, camera, board) => {
   });
 
   return {
-    controls,
     board,
   };
 };

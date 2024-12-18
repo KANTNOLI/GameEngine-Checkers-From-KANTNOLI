@@ -1,4 +1,8 @@
-export const boardSetup = (modelsLoader, scene, camera, lighting, controls) => {
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+
+export const boardSetup = (scene, camera, lighting, controls) => {
+  const modelsLoader = new GLTFLoader();
+
   modelsLoader.load("models/chessboard.glb", (model) => {
     // для удобства клеток
     model.scene.position.y = -0.0777;
