@@ -5,9 +5,9 @@ import { DefaultViEnConfig } from "./Engine/VisualEngineConfigs/DefaultViEnConfi
 import { DefaultLightSetup } from "./Engine/Lighting/DefaultLightSetup.js";
 import { DefaultCameraSettings } from "./Engine/Cameras/DefaultCameraSettings.js";
 import { DefaultOrbitControll } from "./Engine/PlayerActions/DefaultOrbitControll.js";
+import { LoadCheckers } from "./Engine/OtherScripts/loadCheckers.js";
 
 import { boardSetup } from "./boardSetup.js";
-import { defaultSetup } from "./defaultSetup.js";
 import { motion } from "./motion.js";
 
 // const LOCALSTORE_ID = "ID";
@@ -35,10 +35,10 @@ const visualEngine = DefaultViEnConfig();
 const lighting = DefaultLightSetup(scene, "epic");
 const camera = DefaultCameraSettings();
 const playerControlls = DefaultOrbitControll(visualEngine, camera);
+console.log(gameArea);
+LoadCheckers(scene, gameArea); // передаем копию массива, по сути присваивать глупо?
+console.log(gameArea);
 
-// дефолт рендеры по типу сцены, которые по сути пока динамично не изменяются и скорее всего не будут
-const renderObj = defaultSetup(visualEngine, scene, camera, gameArea);
-gameArea = renderObj.board;
 
 boardSetup(scene, camera, lighting, playerControlls);
 

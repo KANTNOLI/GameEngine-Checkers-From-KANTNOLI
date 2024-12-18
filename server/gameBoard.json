@@ -308,5 +308,46 @@
       "position": { "x": 7, "z": 6 },
       "object": { "type": "checkerPiece", "side": "white", "link": null }
     }
+  ],[
+    {
+      "position": { "x": 0, "z": 7 },
+      "object": { "type": "checkerPiece", "side": "white", "link": null }
+    },
+    {
+      "position": { "x": 1, "z": 7 },
+      "object": {
+        "type": null
+      }
+    },
+    {
+      "position": { "x": 2, "z": 7 },
+      "object": { "type": "checkerPiece", "side": "white", "link": null }
+    },
+    {
+      "position": { "x": 3, "z": 7 },
+      "object": {
+        "type": null
+      }
+    },
+    {
+      "position": { "x": 4, "z": 7 },
+      "object": { "type": "checkerPiece", "side": "white", "link": null }
+    },
+    {
+      "position": { "x": 5, "z": 7 },
+      "object": {
+        "type": null
+      }
+    },
+    {
+      "position": { "x": 6, "z": 7 },
+      "object": { "type": "checkerPiece", "side": "white", "link": null }
+    },
+    {
+      "position": { "x": 7, "z": 7 },
+      "object": {
+        "type": null
+      }
+    }
   ]
 ]

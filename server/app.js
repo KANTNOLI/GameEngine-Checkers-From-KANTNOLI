@@ -10,12 +10,18 @@ const io = require("socket.io")(null, {
 
 let online = 0;
 let rooms = {};
-let users = {}
+let users = {};
 
 const app = express();
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, "../client")));
+
+app.use((req, res, next) => {
+  console.log(req.url);
+
+  next();
+});
 
 app.get("/api/board/default", (_, res) => {
   res
@@ -53,13 +59,13 @@ io.on("connection", (socket) => {
     room: {
       roomID: null,
       owner: false, // owner or no
-    }
-  }
+    },
+  };
 
   online++;
   io.emit("online", online);
 
-  // LOBBY - CREATE ROOM PART {FOR OWNER} 
+  // LOBBY - CREATE ROOM PART {FOR OWNER}
   socket.on("createRoom", (roomParam) => {
     // roomParam is  --->
     // {
@@ -85,14 +91,14 @@ io.on("connection", (socket) => {
   socket.on("joinRoom", (joinParam) => {
     socket.join(joinParam.roomID);
 
-    users[socket.id].nickname = joinParam.nickname
-    users[socket.id].game.side = joinParam.side
-    users[socket.id].game.enemyID = joinParam.owner
-    users[socket.id].room.roomID = joinParam.roomID
+    users[socket.id].nickname = joinParam.nickname;
+    users[socket.id].game.side = joinParam.side;
+    users[socket.id].game.enemyID = joinParam.owner;
+    users[socket.id].room.roomID = joinParam.roomID;
     users[socket.id].room.owner = false;
 
     users[joinParam.owner].game.enemyID = socket.id;
-    rooms[joinParam.roomID].userID = socket.id
+    rooms[joinParam.roomID].userID = socket.id;
     // создаем комнату, кидаем ид румы чтобы потом слинковать и отправляем на /game
     io.to(joinParam.roomID).emit("gameStart", joinParam.roomID);
   });
@@ -101,12 +107,10 @@ io.on("connection", (socket) => {
     online--;
     io.emit("online", online);
 
-    delete users[socket.id]
+    delete users[socket.id];
     if (rooms.length && rooms[users[socket.id].room.roomID]) {
-      delete rooms[users[socket.id].room.roomID]
+      delete rooms[users[socket.id].room.roomID];
     }
-
-
   });
 });
 

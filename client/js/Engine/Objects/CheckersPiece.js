@@ -1,13 +1,5 @@
 import * as THREE from "three";
 
-const object = {
-  object: {
-    type: "checkerPiece",
-    side: "black",
-    link: null,
-  },
-};
-
 export const CheckersPiece = (
   scene,
   gameArea,
@@ -49,6 +41,8 @@ export const CheckersPiece = (
 
   gameArea[position.z][position.x].link = piece; // сохраняем ссылку, для удобной работы
   scene.add(piece);
+
+  console.log(1111);
 
   return gameArea;
 };
