@@ -5,9 +5,10 @@ import { DefaultViEnConfig } from "./Engine/VisualEngineConfigs/DefaultViEnConfi
 import { DefaultLightSetup } from "./Engine/Lighting/DefaultLightSetup.js";
 import { DefaultCameraSettings } from "./Engine/Cameras/DefaultCameraSettings.js";
 import { DefaultOrbitControll } from "./Engine/PlayerActions/DefaultOrbitControll.js";
+import { ModelsLoader } from "./Engine/OtherScripts/ModelsLoader.js";
+
 import { LoadCheckers } from "./Engine/OtherScripts/loadCheckers.js";
 
-import { boardSetup } from "./boardSetup.js";
 import { motion } from "./motion.js";
 
 // const LOCALSTORE_ID = "ID";
@@ -33,11 +34,16 @@ scene.background = new THREE.Color(0x303030);
 
 const visualEngine = DefaultViEnConfig();
 const lighting = DefaultLightSetup(scene, "epic");
-const camera = DefaultCameraSettings();
+const camera = DefaultCameraSettings({ x: 1.25, y: 1.25, z: 0.12 });
 const playerControlls = DefaultOrbitControll(visualEngine, camera);
 LoadCheckers(scene, gameArea); // передаем копию массива, по сути присваивать глупо?
 
-boardSetup(scene, camera, lighting, playerControlls);
+ModelsLoader(scene, "models/chessboard.glb",
+  { x: 0.115, y: -0.0777, z: 0.115 },
+  { casting: false, receiving: true },
+  { width: 1, height: 0.5, length: 1 },
+  [lighting.light, lighting.backLight, camera],
+  playerControlls)
 
 window.addEventListener("click", async (event) => {
   const raycaster = new THREE.Raycaster();

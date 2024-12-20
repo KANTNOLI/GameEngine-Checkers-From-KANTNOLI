@@ -6,6 +6,12 @@ import * as THREE from "three";
 // ultra
 // epic
 
+const outputError = (error) => {
+  console.error(error);
+  alert("Fatal error! Look client console");
+  return -1;
+};
+
 const setQualityLight = (light, backLight, size) => {
   light.shadow.mapSize.width = size;
   light.shadow.mapSize.height = size;
@@ -20,36 +26,28 @@ export const DefaultLightSetup = (
   lightIntnsty = { light: 0.6, backLight: 0.1 },
   opacity = 0.5
 ) => {
-  // проверка на долбоеба
-  if (
-    !(scene instanceof THREE.Scene) ||
-    !(typeof lightPos === "object") ||
-    !(typeof lightIntnsty === "object") ||
-    !(typeof quality === "string") ||
-    !(typeof opacity === "number")
-  ) {
-    console.error(
+  if (!(scene instanceof THREE.Scene)) {
+    return outputError(
       `DefaultLightSetup error: The transmitted ones are incorrect`
     );
-    console.error(
+  } else if (!(typeof lightPos === "object")) {
+    return outputError(
       `DefaultLightSetup error: Received data except !scene! => ${JSON.stringify(
         lightPos
       )} - Is this an object?`
     );
-    console.error(
-      `DefaultLightSetup error: Received data except !scene! => ${JSON.stringify(
-        lightIntnsty
-      )} - Is this an object?`
-    );
-    console.error(
+  } else if (!(typeof lightIntnsty === "object")) {
+    return outputError()`DefaultLightSetup error: Received data except !scene! => ${JSON.stringify(
+      lightIntnsty
+    )} - Is this an object?`;
+  } else if (!(typeof quality === "string")) {
+    return outputError(
       `DefaultLightSetup error: Received data except !scene! => ${quality} - Is this an string?`
     );
-    console.error(
+  } else if (!(typeof opacity === "number")) {
+    return outputError(
       `DefaultLightSetup error: Received data except !scene! => ${opacity} - Is this an number?`
     );
-
-    alert("Fatal error! Look client console");
-    return -1;
   }
 
   //Настройка света
