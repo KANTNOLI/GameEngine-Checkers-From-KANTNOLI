@@ -9,8 +9,7 @@ Installation (**Actual 0.6.4** && less) ->
 - CTRL + LCLICK to open 
 
 Engine (**Actual 0.6.4** && less) -> 
-● **Cameras** - Camera settings. There are many camera setup options, including conditional snippets. (**1**)
-
+- **Cameras** - Camera settings. There are many camera setup options, including conditional snippets. (**1**)
 - **Lighting** - Scene light settings. Snippets designed to create light quickly. (**1**)
 - **Objects** - These are objects, or object settings for quick rendering of the scene. For example, checkers for the game. (**1**) 
 - **PlayerActions** - One of the cool themes! Character management files are stored here. At the moment there is 1 control file relative to the orbit of something. (**1**)
