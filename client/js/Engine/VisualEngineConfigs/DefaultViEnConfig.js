@@ -12,6 +12,7 @@ export const DefaultViEnConfig = () => {
   //powerPreference - уровень производительности для рендерера    high-performance  default  low-power
   //depth - буфер глубины 
 
+  
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
   //BasicShadowMap low

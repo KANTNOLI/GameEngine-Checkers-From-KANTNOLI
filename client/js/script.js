@@ -68,7 +68,7 @@ window.addEventListener("click", async (event) => {
 });
 
 const animate = (time) => {
-  playerControlls.update();
+  playerControlls.update(); 
   visualEngine.render(scene, camera);
 };
 

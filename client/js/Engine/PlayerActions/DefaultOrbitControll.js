@@ -9,12 +9,13 @@ export const DefaultOrbitControll = (
     max: 70,
   }
 ) => {
-  if (renderer instanceof THREE.WebGLRenderer) {
+  
+  if (!(renderer instanceof THREE.WebGLRenderer)) {
     console.error(`DefaultOrbitControll error: renderer is not WebGLRenderer!`);
     alert("Fatal error! Look client console");
     return -1;
-  } else if (scene instanceof THREE.Scene) {
-    console.error(`DefaultOrbitControll error: scene is not Scene!`);
+  } else if (!(camera instanceof THREE.PerspectiveCamera)) {
+    console.error(`DefaultOrbitControll error: scene is not PerspectiveCamera!`);
     alert("Fatal error! Look client console");
     return -1;
   }
