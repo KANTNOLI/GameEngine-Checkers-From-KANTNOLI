@@ -13,9 +13,6 @@ export const DefaultCameraSettings = (
   // { x: 0.12, y: 1.25, z: -1.15}) - BLACK
   // { x: 1.25, y: 1.25, z: 0.12 }  - VIEW
 
-  console.log(position);
-  console.log(perspective);
-
   if (typeof perspective === "object") {
     const camera = new THREE.PerspectiveCamera(
       perspective.fov,

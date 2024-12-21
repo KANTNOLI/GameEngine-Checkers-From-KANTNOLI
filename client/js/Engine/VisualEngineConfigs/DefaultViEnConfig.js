@@ -25,9 +25,9 @@ export const DefaultViEnConfig = (
 
   renderer.setSize(window.innerWidth, window.innerHeight);
 
-  if (shadowOn) {
+  if (quality.shadowOn) {
     renderer.shadowMap.enabled = true;
-    switch (shadowMap) {
+    switch (quality.shadowMap) {
       case "low":
         renderer.shadowMap.type = THREE.BasicShadowMap;
         break;
