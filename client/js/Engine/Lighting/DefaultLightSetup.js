@@ -12,19 +12,18 @@ const outputError = (error) => {
   return -1;
 };
 
-const setQualityLight = (light, backLight, size) => {
+const setQualityLight = (light, size) => {
   light.shadow.mapSize.width = size;
   light.shadow.mapSize.height = size;
-  backLight.shadow.mapSize.width = size;
-  backLight.shadow.mapSize.height = size;
 };
 
 export const DefaultLightSetup = (
   scene,
   quality = "medium",
   lightPos = { x: -2.5, y: 5, z: -2.5 },
-  lightIntnsty = { light: 0.6, backLight: 0.1 },
-  opacity = 0.5
+  lightIntnsty = 0.6,
+  opacity = 0.5,
+  bias = -0.0000038
 ) => {
   if (!(scene instanceof THREE.Scene)) {
     return outputError(
@@ -36,7 +35,7 @@ export const DefaultLightSetup = (
         lightPos
       )} - Is this an object?`
     );
-  } else if (!(typeof lightIntnsty === "object")) {
+  } else if (!(typeof lightIntnsty === "number")) {
     return outputError()`DefaultLightSetup error: Received data except !scene! => ${JSON.stringify(
       lightIntnsty
     )} - Is this an object?`;
@@ -51,34 +50,27 @@ export const DefaultLightSetup = (
   }
 
   //Настройка света
-  const light = new THREE.DirectionalLight(0xffffff, lightIntnsty.light);
+  const light = new THREE.DirectionalLight(0xffffff, lightIntnsty);
   light.position.set(lightPos.x, lightPos.y, lightPos.z);
+  light.shadow.bias = bias;
   light.castShadow = true;
-
-  //перебивка. фоновый, чтобы тени были не очень неграми, стоп чо
-  const backLight = new THREE.DirectionalLight(
-    0xffffff,
-    lightIntnsty.backLight
-  );
-  backLight.position.set(-lightPos.x, lightPos.y, -lightPos.z); // если не пон почему тут -, то глек
-  backLight.castShadow = true;
 
   // относительо графики делаем качество теней. По умолч medium, та даже если ошибка, пофиг
   switch (quality) {
     case "low":
-      setQualityLight(light, backLight, 512);
+      setQualityLight(light, 512);
       break;
     case "high":
-      setQualityLight(light, backLight, 2048);
+      setQualityLight(light, 2048);
       break;
     case "ultra":
-      setQualityLight(light, backLight, 4096);
+      setQualityLight(light, 4096);
       break;
     case "epic":
-      setQualityLight(light, backLight, 8192);
+      setQualityLight(light, 8192);
       break;
     default: {
-      setQualityLight(light, backLight, 1024);
+      setQualityLight(light, 1024);
     }
   }
 
@@ -91,11 +83,7 @@ export const DefaultLightSetup = (
 
   //Добавляем
   scene.add(light);
-  scene.add(backLight);
   scene.add(shadow);
 
-  return {
-    light,
-    backLight,
-  };
+  return light;
 };
