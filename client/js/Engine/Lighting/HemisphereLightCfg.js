@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-export const SpotLightCfg = (
+export const HemisphereLightCfg = (
   scene,
   params = {
     skyColor: 0x4040ff,
@@ -14,4 +14,6 @@ export const SpotLightCfg = (
 //   light.skyColor.set(0xff0000); // Изменение цвета неба
 //   light.groundColor.set(0x00ff00); // Изменение цвета земли
 //   light.intensity = 0.7; // Изменение интенсивности
+
+return light
 };

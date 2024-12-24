@@ -6,7 +6,8 @@ import { DefaultCameraSettings } from "./Engine/Cameras/DefaultCameraSettings.js
 import { CameraLimitSquare } from "./Engine/Cameras/CameraLimitSquare.js";
 import { DefaultOrbitControll } from "./Engine/PlayerActions/DefaultOrbitControll.js";
 import { ModelsLoader } from "./Engine/OtherScripts/ModelsLoader.js";
-import { DefaultLightSetup } from "./Engine/Lighting/DefaultLightSetup.js";
+import { HemisphereLightCfg } from "./Engine/Lighting/HemisphereLightCfg.js";
+import { DirectionalLightCfg } from "./Engine/Lighting/DirectionalLightCfg.js";
 import { TrackingClickItem } from "./Engine/PlayerActions/TrackingClickItem.js";
 
 import { LoadCheckers } from "./Engine/OtherScripts/loadCheckers.js";
@@ -31,9 +32,6 @@ const socket = io("http://localhost:3000");
 let gameArea = await fetch("/api/board/default").then((res) => res.json());
 //let removeVariate = [];
 
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x303030);
-
 const visualEngine = DefaultViEnConfig({
   antialias: true,
   precision: "mediump",
@@ -42,24 +40,32 @@ const visualEngine = DefaultViEnConfig({
   shadowOn: true,
   shadowMap: "normal",
 });
-const lighting = DefaultLightSetup(
+
+const scene = new THREE.Scene();
+
+HemisphereLightCfg(scene, {
+  intensity: 0.01,
+});
+
+const mainLight = DirectionalLightCfg(
   scene,
-  "epic",
-  { x: 0.5, y: 1, z: 0.5 },
-  0.5,
-  0.5,
-  -0.000004,
-  0x44ffff
+  {
+    x: 0,
+    y: 5,
+    z: 5,
+  },
+  {
+    intensity: 0.3,
+  }
 );
-const BackLighting = DefaultLightSetup(
-  scene,
-  "epic",
-  { x: -0.5, y: 1, z: -0.5 },
-  0.1,
-  0.5,
-  -0.000004,
-  0xffffff
-);
+
+const shadowGeometry = new THREE.PlaneGeometry(10, 10); // По сути тень это типо пласт
+const shadowMaterial = new THREE.ShadowMaterial({ opacity: 0.5 }); // Интенс тени
+const shadow = new THREE.Mesh(shadowGeometry, shadowMaterial); //Линкуем
+shadow.rotation.x = -Math.PI / 2;
+shadow.position.y = -0.2;
+
+scene.add(shadow);
 
 const camera = DefaultCameraSettings(
   { x: 1.25, y: 1.25, z: 0.12 },
@@ -80,7 +86,7 @@ ModelsLoader(
   { x: 0.115, y: -0.11, z: 0.115 },
   { casting: true, receiving: true },
   { width: 1, height: 0.8, length: 1 },
-  [lighting, BackLighting, camera],
+  [camera, mainLight],
   playerControlls
 );
 // room
@@ -99,10 +105,7 @@ window.addEventListener("click", async (event) => {
 const animate = (time) => {
   playerControlls.update();
   visualEngine.render(scene, camera);
-  CameraLimitSquare(camera, {
-    height: 6,
-    length: 6.3,
-  });
+  CameraLimitSquare(camera, 5);
 };
 
 visualEngine.setAnimationLoop(animate);

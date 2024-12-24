@@ -34,4 +34,6 @@ export const PointLightCfg = (
   light.shadow.bias = shadows.bias; // Пример значения для shadow.bias
   light.shadow.mapSize.width = shadows.mapSize; // Установка размера карты теней
   light.shadow.mapSize.height = shadows.mapSize; // Установка размера карты теней
+
+  return light
 };

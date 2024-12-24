@@ -1,21 +1,18 @@
 export const CameraLimitSquare = (
   camera,
-  position = {
-    height: 10,
-    length: 10,
-  }
+  position = 10
 ) => {
   camera.position.x = Math.max(
-    -position.length,
-    Math.min(position.length, camera.position.x)
+    -position,
+    Math.min(position, camera.position.x)
   );
   camera.position.y = Math.max(
-    -position.height,
-    Math.min(position.height, camera.position.y)
+    -position,
+    Math.min(position, camera.position.y)
   );
   camera.position.z = Math.max(
-    -position.length,
-    Math.min(position.length, camera.position.z)
+    -position,
+    Math.min(position, camera.position.z)
   );
   
   return camera;

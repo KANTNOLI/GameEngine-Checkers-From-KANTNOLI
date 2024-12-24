@@ -7,7 +7,7 @@ export const ModelsLoader = (
   scene,
   path = "models/error.glb",
   position = { x: 0, y: 0, z: 0 },
-  shadow = { casting: true, receiving: false },
+  shadow = { casting: true, receiving: true },
   scale = { width: 1, height: 1, length: 1 },
   looksAt = null,
   controll = null
@@ -36,6 +36,7 @@ export const ModelsLoader = (
     // если мы получили массив элементов рендера, которые должны смотреть на модель, то парсим
     if (Array.isArray(looksAt)) {
       looksAt.map((object, id) => {
+        console.log(object);
         object.isObject3D
           ? object.lookAt(model.scene.position)
           : console.error(

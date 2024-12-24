@@ -12,4 +12,6 @@ export const AmbientLightCfg = (
 
   // light.color.set(0xff0000);
   // light.intensity = 0.7;
+
+  return light
 };

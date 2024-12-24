@@ -13,12 +13,12 @@ export const DirectionalLightCfg = (
   },
   shadows = {
     cast: true,
-    bias: 0.0001,
-    mapSize: 1024,
+    bias: -0.000005,
+    mapSize: 8192,
   }
 ) => {
   const light = new THREE.DirectionalLight(params.color, params.intensity); // Белый свет с интенсивностью 1
-  light.position.set(position.x, position.y, position.z).normalize();
+  light.position.set(position.x, position.y, position.z);
   scene.add(light);
 
   // light.color.set(0x00ff00); // Изменение цвета света
@@ -27,4 +27,6 @@ export const DirectionalLightCfg = (
   light.shadow.bias = shadows.bias; // артефакты фикс
   light.shadow.mapSize.width = shadows.mapSize; // Установка размера карты теней
   light.shadow.mapSize.height = shadows.mapSize; // Установка размера карты теней
+
+  return light;
 };
