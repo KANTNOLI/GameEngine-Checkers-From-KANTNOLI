@@ -1,9 +1,15 @@
 import * as THREE from "three";
 
-export const AmbientLightCfg = () => {
-  const light = new THREE.AmbientLight(0xffffff, 0.5);
+export const AmbientLightCfg = (
+  scene,
+  params = {
+    color: 0xffffff,
+    intensity: 1,
+  }
+) => {
+  const light = new THREE.AmbientLight(params.color, params.intensity);
   scene.add(light);
 
-  light.color.set(0xff0000); // Изменение цвета света
-  light.intensity = 0.7; // Изменение интенсивности
+  // light.color.set(0xff0000);
+  // light.intensity = 0.7;
 };
