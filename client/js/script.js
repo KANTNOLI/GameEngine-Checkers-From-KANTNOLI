@@ -48,7 +48,8 @@ const lighting = DefaultLightSetup(
   { x: 0.5, y: 1, z: 0.5 },
   0.5,
   0.5,
-  -0.000004
+  -0.000004,
+  0x44ffff
 );
 const BackLighting = DefaultLightSetup(
   scene,
@@ -56,7 +57,8 @@ const BackLighting = DefaultLightSetup(
   { x: -0.5, y: 1, z: -0.5 },
   0.1,
   0.5,
-  -0.000004
+  -0.000004,
+  0xffffff
 );
 
 const camera = DefaultCameraSettings(
