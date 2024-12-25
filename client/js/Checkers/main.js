@@ -37,20 +37,47 @@ const AnalysisVariateStep = (
           { type: "checkerPiece", side: "other", link: null },
           {
             x: position.x + move.x,
-            z: position.z + move.z, 
+            z: position.z + move.z,
           }
         );
 
-       // scene.remove(gameArea[position.z][position.x].object.link);
+        // scene.remove(gameArea[position.z][position.x].object.link);
         select.metaData.object.original = original;
         removeCells.push(select);
       }
     }
   } else if (object.side === "other") {
+    gameArea[object.original.metaData.position.z][
+      object.original.metaData.position.x
+    ] = {
+      position: {
+        x: object.original.metaData.position.x,
+        z: object.original.metaData.position.z,
+      },
+      object: {
+        type: null,
+      },
+    };
+    // замена массива чобы ничего небыло
 
-    console.log(object.original);
-    scene.remove(object.original)
-    
+    gameArea[position.z][position.x] = {
+      position: { x: position.x, z: position.z },
+      object: {
+        type: "checkerPiece",
+        side: object.original.metaData.object.side,
+        link: null,
+      },
+    };
+
+    let newCell = CheckersPiece(
+      scene,
+      gameArea,
+      gameArea[position.z][position.x].object,
+      gameArea[position.z][position.x].position
+    );
+
+    scene.add(newCell);
+    scene.remove(object.original);
   }
 };
 
@@ -66,6 +93,9 @@ export const Render = (scene, gameArea, activeCell, removeCells) => {
     activeCell.metaData.object,
     removeCells
   );
+
+  console.log(gameArea);
+  
 
   return 1;
 };

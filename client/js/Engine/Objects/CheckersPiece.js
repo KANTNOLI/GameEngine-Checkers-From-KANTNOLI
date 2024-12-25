@@ -48,6 +48,7 @@ export const CheckersPiece = (
   }
 
   gameArea[position.z][position.x].object.link = piece; // сохраняем ссылку, для удобной работы
+  console.log(position.z, position.x);
   scene.add(piece);
 
   return piece;
