@@ -27,3 +27,7 @@ P.S. **Before the release of 1.0 or 2.0**, depending on the circumstances, most 
 **0.7.4**
 ![image](https://github.com/user-attachments/assets/48663719-c16f-4d8f-b299-ec079d6b8e1f)
 
+**0.8.1**
+![image](https://github.com/user-attachments/assets/126f0071-1011-4c54-8f11-7251b31c07c4)
+
+
