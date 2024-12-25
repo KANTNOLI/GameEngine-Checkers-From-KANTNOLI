@@ -37,7 +37,7 @@ const AnalysisVariateStep = (
           { type: "checkerPiece", side: "other", link: null },
           {
             x: position.x + move.x,
-            z: position.z + move.z,
+            z: position.z + move.z, 
           }
         );
 
