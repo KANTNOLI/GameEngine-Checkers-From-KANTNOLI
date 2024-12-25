@@ -37,7 +37,7 @@ export const ModelsLoader = async (
     // если мы получили массив элементов рендера, которые должны смотреть на модель, то парсим
     if (Array.isArray(looksAt)) {
       looksAt.map((object, id) => {
-        console.log(object);
+        //console.log(object);
         object.isObject3D
           ? object.lookAt(model.scene.position)
           : console.error(

@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { CheckersPiece } from "../Objects/CheckersPiece.js";
+import { CheckersPiece } from "../Engine/Objects/CheckersPiece.js";
 
 export const LoadCheckers = (scene, gameArea) => {
   gameArea.map((vertLine, cordZ) => {

@@ -7,14 +7,13 @@ import { CameraLimitSquare } from "./Engine/Cameras/CameraLimitSquare.js";
 import { DefaultOrbitControll } from "./Engine/PlayerActions/DefaultOrbitControll.js";
 import { ModelsLoader } from "./Engine/OtherScripts/ModelsLoader.js";
 import { HemisphereLightCfg } from "./Engine/Lighting/HemisphereLightCfg.js";
-import { DirectionalLightCfg } from "./Engine/Lighting/DirectionalLightCfg.js";
+import { SpotLightCfg } from "./Engine/Lighting/SpotLightCfg.js";
+import { ShadowCfg } from "./Engine/Lighting/ShadowCfg.js";
+import { PointLightCfg } from "./Engine/Lighting/PointLightCfg.js";
 import { TrackingClickItem } from "./Engine/PlayerActions/TrackingClickItem.js";
 
-import { LoadCheckers } from "./Engine/OtherScripts/loadCheckers.js";
-
-import { motion } from "./motion.js";
-import { ShadowCfg } from "./Engine/Lighting/ShadowCfg.js";
-import { SpotLightCfg } from "./Engine/Lighting/SpotLightCfg.js";
+import { LoadCheckers } from "./Checkers/LoadCheckers.js";
+import { Render } from "./Checkers/main.js";
 
 // const LOCALSTORE_ID = "ID";
 // const LOCALSTORE_ROOM_ID = "ROOM_ID";
@@ -32,7 +31,6 @@ const socket = io("http://localhost:3000");
 // });
 
 let gameArea = await fetch("/api/board/default").then((res) => res.json());
-//let removeVariate = [];
 
 const visualEngine = DefaultViEnConfig({
   antialias: true,
@@ -48,19 +46,27 @@ const scene = new THREE.Scene();
 HemisphereLightCfg(scene, {
   intensity: 0.01,
 });
+PointLightCfg(
+  scene,
+  {
+    x: 2,
+    y: 1.2,
+    z: 1.7,
+  },
+  {
+    color: 0xffffff,
+    intensity: 0.1,
+  }
+);
 const mainLight = SpotLightCfg(
   scene,
   { intensity: 3 },
   {
     x: 2,
     y: 1.2,
-    z: 1.6,
+    z: 1.7,
   }
 );
-
-// const hepler = new THREE.SpotLightHelper(mainLight);
-// scene.add(hepler);
-
 ShadowCfg(scene);
 
 const camera = DefaultCameraSettings(
@@ -73,9 +79,8 @@ const camera = DefaultCameraSettings(
   }
 );
 const playerControlls = DefaultOrbitControll(visualEngine, camera);
-LoadCheckers(scene, gameArea); // передаем копию массива, по сути присваивать глупо?
+LoadCheckers(scene, gameArea);
 
-//board
 ModelsLoader(
   scene,
   "models/chessboard.glb",
@@ -85,7 +90,6 @@ ModelsLoader(
   [camera, mainLight],
   playerControlls
 );
-
 ModelsLoader(
   scene,
   "models/table_lamp.glb",
@@ -100,8 +104,6 @@ ModelsLoader(
     z: 0,
   }
 );
-
-// room
 ModelsLoader(
   scene,
   "models/room.glb",
@@ -110,16 +112,20 @@ ModelsLoader(
   { width: 0.04, height: 0.04, length: 0.04 }
 );
 
-ModelsLoader(
-  scene,
-  "models/room.glb",
-  { x: 0.5, y: -3.45, z: 0.2 },
-  { casting: true, receiving: true },
-  { width: 0.04, height: 0.04, length: 0.04 }
-);
-
+let removeCells = [];
 window.addEventListener("click", async (event) => {
-  console.log(TrackingClickItem(scene, camera, event));
+  if (
+    TrackingClickItem(scene, camera, event).object.metaData &&
+    TrackingClickItem(scene, camera, event).object.metaData.object.type ===
+      "checkerPiece"
+  ) {
+    Render(
+      scene,
+      gameArea,
+      TrackingClickItem(scene, camera, event).object,
+      removeCells
+    );
+  }
 });
 
 const animate = (time) => {
