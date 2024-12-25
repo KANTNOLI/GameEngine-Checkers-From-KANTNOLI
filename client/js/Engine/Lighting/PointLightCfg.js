@@ -14,7 +14,7 @@ export const PointLightCfg = (
   },
   shadows = {
     cast: true,
-    bias: 0.0005,
+    bias: -0.000005,
     mapSize: 512,
   }
 ) => {

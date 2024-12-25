@@ -19,8 +19,8 @@ export const SpotLightCfg = (
   },
   shadows = {
     cast: true,
-    bias: 0.0001,
-    mapSize: 512,
+    bias: -0.0002,
+    mapSize: 8192,
   }
 ) => {
   const light = new THREE.SpotLight(params.color, params.intensity); // Зеленый свет с интенсивностью 1

@@ -3,14 +3,15 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 // scene, camera, lighting, controls
 
-export const ModelsLoader = (
+export const ModelsLoader = async (
   scene,
   path = "models/error.glb",
   position = { x: 0, y: 0, z: 0 },
   shadow = { casting: true, receiving: true },
   scale = { width: 1, height: 1, length: 1 },
   looksAt = null,
-  controll = null
+  controll = null,
+  rotation = null
 ) => {
   const modelsLoader = new GLTFLoader();
 
@@ -48,8 +49,15 @@ export const ModelsLoader = (
     if (controll) {
       controll.target.copy(model.scene.position);
     }
-    scene.add(model.scene);
-  });
 
-  return modelsLoader;
+    if (rotation) {
+      model.scene.rotation.x = (Math.PI / 180) * rotation.x;
+      model.scene.rotation.y = (Math.PI / 180) * rotation.y;
+      model.scene.rotation.z = (Math.PI / 180) * rotation.z;
+    }
+
+    scene.add(model.scene);
+
+    return model;
+  });
 };

@@ -13,6 +13,8 @@ import { TrackingClickItem } from "./Engine/PlayerActions/TrackingClickItem.js";
 import { LoadCheckers } from "./Engine/OtherScripts/loadCheckers.js";
 
 import { motion } from "./motion.js";
+import { ShadowCfg } from "./Engine/Lighting/ShadowCfg.js";
+import { SpotLightCfg } from "./Engine/Lighting/SpotLightCfg.js";
 
 // const LOCALSTORE_ID = "ID";
 // const LOCALSTORE_ROOM_ID = "ROOM_ID";
@@ -46,26 +48,20 @@ const scene = new THREE.Scene();
 HemisphereLightCfg(scene, {
   intensity: 0.01,
 });
-
-const mainLight = DirectionalLightCfg(
+const mainLight = SpotLightCfg(
   scene,
+  { intensity: 3 },
   {
-    x: 0,
-    y: 5,
-    z: 5,
-  },
-  {
-    intensity: 0.3,
+    x: 2,
+    y: 1.2,
+    z: 1.6,
   }
 );
 
-const shadowGeometry = new THREE.PlaneGeometry(10, 10); // По сути тень это типо пласт
-const shadowMaterial = new THREE.ShadowMaterial({ opacity: 0.5 }); // Интенс тени
-const shadow = new THREE.Mesh(shadowGeometry, shadowMaterial); //Линкуем
-shadow.rotation.x = -Math.PI / 2;
-shadow.position.y = -0.2;
+// const hepler = new THREE.SpotLightHelper(mainLight);
+// scene.add(hepler);
 
-scene.add(shadow);
+ShadowCfg(scene);
 
 const camera = DefaultCameraSettings(
   { x: 1.25, y: 1.25, z: 0.12 },
@@ -89,7 +85,31 @@ ModelsLoader(
   [camera, mainLight],
   playerControlls
 );
+
+ModelsLoader(
+  scene,
+  "models/table_lamp.glb",
+  { x: 2, y: -0.2, z: 1.7 },
+  { casting: true, receiving: true },
+  { width: 0.08, height: 0.08, length: 0.08 },
+  null,
+  null,
+  {
+    x: 0,
+    y: 140,
+    z: 0,
+  }
+);
+
 // room
+ModelsLoader(
+  scene,
+  "models/room.glb",
+  { x: 0.5, y: -3.45, z: 0.2 },
+  { casting: true, receiving: true },
+  { width: 0.04, height: 0.04, length: 0.04 }
+);
+
 ModelsLoader(
   scene,
   "models/room.glb",
