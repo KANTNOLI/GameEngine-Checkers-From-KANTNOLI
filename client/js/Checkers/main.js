@@ -2,10 +2,10 @@ import { CheckersPiece } from "../Engine/Objects/CheckersPiece.js";
 import { ClearRemoveCells } from "./ClearRemoveCells.js";
 
 const directs = [
-  { x: 1, z: -1, side: "black" },
-  { x: -1, z: -1, side: "black" },
-  { x: 1, z: 1, side: "white" },
-  { x: -1, z: 1, side: "white" },
+  { x: 1, z: -1, side: "white" },
+  { x: -1, z: -1, side: "white" },
+  { x: 1, z: 1, side: "black" },
+  { x: -1, z: 1, side: "black" },
 ];
 
 const AnalysisVariateStep = (
@@ -23,11 +23,12 @@ const AnalysisVariateStep = (
       let nextStepX = position.x + move.x;
       let nextStepZ = position.z + move.z;
 
-      console.log(`move`, move);
 
+      // теперь мы добавляем ход если клетка пуста и движение следует правилам (Направление )
       if (
         gameArea[nextStepZ][nextStepX] &&
-        gameArea[nextStepZ][nextStepX].object.type === null
+        gameArea[nextStepZ][nextStepX].object.type === null &&
+        object.side === move.side
       ) {
         let select = CheckersPiece(
           scene,
@@ -82,8 +83,8 @@ const AnalysisVariateStep = (
 export const Render = (scene, gameArea, activeCell, removeCells) => {
   //   console.log(activeCell.metaData);
 
-  // добавить в метадата булл свойство королевы 
-  console.log(activeCell);
+  // добавить в метадата булл свойство королевы
+  // console.log(activeCell);
 
   ClearRemoveCells(scene, removeCells);
   AnalysisVariateStep(
