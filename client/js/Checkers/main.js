@@ -1,14 +1,11 @@
 import { CheckersPiece } from "../Engine/Objects/CheckersPiece.js";
 import { ClearRemoveCells } from "./ClearRemoveCells.js";
 
-const directsWhite = [
-  { x: 1, z: -1 },
-  { x: -1, z: -1 },
-];
-
-const directsBlack = [
-  { x: 1, z: 1 },
-  { x: -1, z: 1 },
+const directs = [
+  { x: 1, z: -1, side: "black" },
+  { x: -1, z: -1, side: "black" },
+  { x: 1, z: 1, side: "white" },
+  { x: -1, z: 1, side: "white" },
 ];
 
 const AnalysisVariateStep = (
@@ -20,12 +17,13 @@ const AnalysisVariateStep = (
   removeCells
 ) => {
   // while внутри фор для королевы для обработки линий
-
-  console.log(original);
   if (object.side != "other") {
-    for (const move of object.side === "white" ? directsWhite : directsBlack) {
+    // рисовка путей
+    for (const move of directs) {
       let nextStepX = position.x + move.x;
       let nextStepZ = position.z + move.z;
+
+      console.log(`move`, move);
 
       if (
         gameArea[nextStepZ][nextStepX] &&
@@ -84,6 +82,9 @@ const AnalysisVariateStep = (
 export const Render = (scene, gameArea, activeCell, removeCells) => {
   //   console.log(activeCell.metaData);
 
+  // добавить в метадата булл свойство королевы 
+  console.log(activeCell);
+
   ClearRemoveCells(scene, removeCells);
   AnalysisVariateStep(
     scene,
@@ -95,7 +96,6 @@ export const Render = (scene, gameArea, activeCell, removeCells) => {
   );
 
   console.log(gameArea);
-  
 
   return 1;
 };
