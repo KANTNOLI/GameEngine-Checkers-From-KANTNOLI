@@ -1,6 +1,7 @@
 import { CheckersPiece } from "../Engine/Objects/CheckersPiece.js";
 import { ClearRemoveCells } from "./ClearRemoveCells.js";
 import { MakeSelect } from "./MakeSelect.js";
+import { CellStep } from "./CellStep.js";
 
 const directs = [
   { x: 1, z: -1, side: "white" },
@@ -43,39 +44,8 @@ const AnalysisVariateStep = (
       }
     }
   } else if (object.side === "other") {
-    console.log(`x: ${position.x}, z: ${position.z} - step`);
-
-    gameArea[object.original.metaData.position.z][
-      object.original.metaData.position.x
-    ] = {
-      position: {
-        x: object.original.metaData.position.x,
-        z: object.original.metaData.position.z,
-      },
-      object: {
-        type: null,
-      },
-    };
-    // замена массива чобы ничего небыло
-
-    gameArea[position.z][position.x] = {
-      position: { x: position.x, z: position.z },
-      object: {
-        type: "checkerPiece",
-        side: object.original.metaData.object.side,
-        link: null,
-      },
-    };
-
-    let newCell = CheckersPiece(
-      scene,
-      gameArea,
-      gameArea[position.z][position.x].object,
-      gameArea[position.z][position.x].position
-    );
-
-    scene.add(newCell);
-    scene.remove(object.original);
+    // если мы тыкаем на зеленую штуку делаем ход
+    CellStep(scene, gameArea, position, object);
   }
 };
 
@@ -97,7 +67,7 @@ export const Render = (scene, gameArea, activeCell, removeCells) => {
     removeCells
   );
 
-  //console.log(gameArea);
+  console.log(gameArea);
 
   return 1;
 };
