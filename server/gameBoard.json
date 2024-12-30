@@ -8,7 +8,12 @@
     },
     {
       "position": { "x": 1, "z": 0 },
-      "object": { "type": "checkerPiece", "side": "black", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "black",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 2, "z": 0 },
@@ -18,7 +23,12 @@
     },
     {
       "position": { "x": 3, "z": 0 },
-      "object": { "type": "checkerPiece", "side": "black", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "black",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 4, "z": 0 },
@@ -28,7 +38,12 @@
     },
     {
       "position": { "x": 5, "z": 0 },
-      "object": { "type": "checkerPiece", "side": "black", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "black",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 6, "z": 0 },
@@ -38,13 +53,23 @@
     },
     {
       "position": { "x": 7, "z": 0 },
-      "object": { "type": "checkerPiece", "side": "black", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "black",
+        "queen": false,
+        "link": null
+      }
     }
   ],
   [
     {
       "position": { "x": 0, "z": 1 },
-      "object": { "type": "checkerPiece", "side": "black", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "black",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 1, "z": 1 },
@@ -54,7 +79,12 @@
     },
     {
       "position": { "x": 2, "z": 1 },
-      "object": { "type": "checkerPiece", "side": "black", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "black",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 3, "z": 1 },
@@ -64,7 +94,12 @@
     },
     {
       "position": { "x": 4, "z": 1 },
-      "object": { "type": "checkerPiece", "side": "black", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "black",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 5, "z": 1 },
@@ -74,7 +109,12 @@
     },
     {
       "position": { "x": 6, "z": 1 },
-      "object": { "type": "checkerPiece", "side": "black", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "black",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 7, "z": 1 },
@@ -92,7 +132,12 @@
     },
     {
       "position": { "x": 1, "z": 2 },
-      "object": { "type": "checkerPiece", "side": "black", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "black",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 2, "z": 2 },
@@ -102,7 +147,12 @@
     },
     {
       "position": { "x": 3, "z": 2 },
-      "object": { "type": "checkerPiece", "side": "black", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "black",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 4, "z": 2 },
@@ -112,7 +162,12 @@
     },
     {
       "position": { "x": 5, "z": 2 },
-      "object": { "type": "checkerPiece", "side": "black", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "black",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 6, "z": 2 },
@@ -122,7 +177,12 @@
     },
     {
       "position": { "x": 7, "z": 2 },
-      "object": { "type": "checkerPiece", "side": "black", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "black",
+        "queen": false,
+        "link": null
+      }
     }
   ],
   [
@@ -228,7 +288,12 @@
   [
     {
       "position": { "x": 0, "z": 5 },
-      "object": { "type": "checkerPiece", "side": "white", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "white",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 1, "z": 5 },
@@ -238,7 +303,12 @@
     },
     {
       "position": { "x": 2, "z": 5 },
-      "object": { "type": "checkerPiece", "side": "white", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "white",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 3, "z": 5 },
@@ -248,7 +318,12 @@
     },
     {
       "position": { "x": 4, "z": 5 },
-      "object": { "type": "checkerPiece", "side": "white", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "white",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 5, "z": 5 },
@@ -258,7 +333,12 @@
     },
     {
       "position": { "x": 6, "z": 5 },
-      "object": { "type": "checkerPiece", "side": "white", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "white",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 7, "z": 5 },
@@ -276,7 +356,12 @@
     },
     {
       "position": { "x": 1, "z": 6 },
-      "object": { "type": "checkerPiece", "side": "white", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "white",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 2, "z": 6 },
@@ -286,7 +371,12 @@
     },
     {
       "position": { "x": 3, "z": 6 },
-      "object": { "type": "checkerPiece", "side": "white", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "white",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 4, "z": 6 },
@@ -296,7 +386,12 @@
     },
     {
       "position": { "x": 5, "z": 6 },
-      "object": { "type": "checkerPiece", "side": "white", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "white",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 6, "z": 6 },
@@ -306,12 +401,23 @@
     },
     {
       "position": { "x": 7, "z": 6 },
-      "object": { "type": "checkerPiece", "side": "white", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "white",
+        "queen": false,
+        "link": null
+      }
     }
-  ],[
+  ],
+  [
     {
       "position": { "x": 0, "z": 7 },
-      "object": { "type": "checkerPiece", "side": "white", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "white",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 1, "z": 7 },
@@ -321,7 +427,12 @@
     },
     {
       "position": { "x": 2, "z": 7 },
-      "object": { "type": "checkerPiece", "side": "white", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "white",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 3, "z": 7 },
@@ -331,7 +442,12 @@
     },
     {
       "position": { "x": 4, "z": 7 },
-      "object": { "type": "checkerPiece", "side": "white", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "white",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 5, "z": 7 },
@@ -341,7 +457,12 @@
     },
     {
       "position": { "x": 6, "z": 7 },
-      "object": { "type": "checkerPiece", "side": "white", "link": null }
+      "object": {
+        "type": "checkerPiece",
+        "side": "white",
+        "queen": false,
+        "link": null
+      }
     },
     {
       "position": { "x": 7, "z": 7 },

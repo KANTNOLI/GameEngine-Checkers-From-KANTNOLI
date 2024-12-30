@@ -3,7 +3,7 @@ import * as THREE from "three";
 export const CheckersPiece = (
   scene,
   gameArea,
-  object = { type: "checkerPiece", side: "other", link: null },
+  object = { type: "checkerPiece", side: "other", queen: false,  link: null },
   position = { x: 0, z: 0 }
 ) => {
   // для удобство разбил сразу на 2

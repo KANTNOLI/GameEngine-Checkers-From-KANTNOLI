@@ -1,5 +1,6 @@
 import { CheckersPiece } from "../Engine/Objects/CheckersPiece.js";
 import { ClearRemoveCells } from "./ClearRemoveCells.js";
+import { MakeSelect } from "./MakeSelect.js";
 
 const directs = [
   { x: 1, z: -1, side: "white" },
@@ -23,29 +24,27 @@ const AnalysisVariateStep = (
       let nextStepX = position.x + move.x;
       let nextStepZ = position.z + move.z;
 
-
-      // теперь мы добавляем ход если клетка пуста и движение следует правилам (Направление )
+      // теперь мы добавляем ход если клетка пуста и движение следует правилам (Направления)
       if (
+        gameArea[nextStepZ] &&
         gameArea[nextStepZ][nextStepX] &&
         gameArea[nextStepZ][nextStepX].object.type === null &&
         object.side === move.side
       ) {
-        let select = CheckersPiece(
+        // функция которая создает зеленый ход
+        MakeSelect(
           scene,
           gameArea,
-          { type: "checkerPiece", side: "other", link: null },
-          {
-            x: position.x + move.x,
-            z: position.z + move.z,
-          }
+          removeCells,
+          original,
+          nextStepX,
+          nextStepZ
         );
-
-        // scene.remove(gameArea[position.z][position.x].object.link);
-        select.metaData.object.original = original;
-        removeCells.push(select);
       }
     }
   } else if (object.side === "other") {
+    console.log(`x: ${position.x}, z: ${position.z} - step`);
+
     gameArea[object.original.metaData.position.z][
       object.original.metaData.position.x
     ] = {
@@ -86,6 +85,8 @@ export const Render = (scene, gameArea, activeCell, removeCells) => {
   // добавить в метадата булл свойство королевы
   // console.log(activeCell);
 
+  //console.log(activeCell.metaData.object.queen);
+
   ClearRemoveCells(scene, removeCells);
   AnalysisVariateStep(
     scene,
@@ -96,7 +97,7 @@ export const Render = (scene, gameArea, activeCell, removeCells) => {
     removeCells
   );
 
-  console.log(gameArea);
+  //console.log(gameArea);
 
   return 1;
 };
