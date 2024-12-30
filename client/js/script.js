@@ -116,8 +116,10 @@ let removeCells = [];
 window.addEventListener("click", async (event) => {
   if (
     TrackingClickItem(scene, camera, event).object.metaData &&
-    TrackingClickItem(scene, camera, event).object.metaData.object.type ===
-      "checkerPiece"
+    (TrackingClickItem(scene, camera, event).object.metaData.object.type ===
+      "checkerPiece" ||
+      TrackingClickItem(scene, camera, event).object.metaData.object.side ===
+        "other")
   ) {
     Render(
       scene,

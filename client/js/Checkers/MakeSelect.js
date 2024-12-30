@@ -6,15 +6,16 @@ export const MakeSelect = (
   removeCells,
   original,
   nextStepX,
-  nextStepZ
+  nextStepZ,
+  type
 ) => {
-  console.log(`x: ${nextStepX}, z: ${nextStepZ} - select`);
+  // console.log(`x: ${nextStepX}, z: ${nextStepZ} - select`);
 
   // создаем select
   let select = CheckersPiece(
     scene,
     gameArea,
-    { type: "checkerPiece", side: "other", link: null },
+    { type: "checkerPiece", side: "other", link: null, type: type },
     {
       x: nextStepX,
       z: nextStepZ,

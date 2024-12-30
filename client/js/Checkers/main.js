@@ -19,7 +19,8 @@ const AnalysisVariateStep = (
   removeCells
 ) => {
   // while внутри фор для королевы для обработки линий
-  if (object.side != "other") {
+  // в будущ флаг для киллера
+  if (object.type === "checkerPiece") {
     // рисовка путей
     for (const move of directs) {
       let nextStepX = position.x + move.x;
@@ -39,14 +40,52 @@ const AnalysisVariateStep = (
           removeCells,
           original,
           nextStepX,
-          nextStepZ
+          nextStepZ,
+          "other"
         );
+      } else if (
+        gameArea[nextStepZ + move.z] &&
+        gameArea[nextStepZ + move.z][nextStepX + move.x] &&
+        gameArea[nextStepZ][nextStepX].object.type === "checkerPiece" &&
+        gameArea[nextStepZ][nextStepX].object.side != object.side &&
+        gameArea[nextStepZ + move.z][nextStepX + move.x].object.type === null
+      ) {
+        // console.log(gameArea[nextStepZ][nextStepX]);
+        MakeSelect(
+          scene,
+          gameArea,
+          removeCells,
+          original,
+          nextStepX + move.x,
+          nextStepZ + move.z,
+          "killer"
+        ).metaData.object.kill = gameArea[nextStepZ][nextStepX];
       }
+      //
+      //
+      //
     }
-  } else if (object.side === "other") {
+  } else if (object.type === "other") {
     // если мы тыкаем на зеленую штуку делаем ход
     CellStep(scene, gameArea, position, object);
+  } else if (object.type === "killer") {
+    // если мы тыкаем на зеленую штуку делаем ход
+    CellStep(scene, gameArea, position, object);
+
+    gameArea[object.kill.position.z][object.kill.position.x] = {
+      position: { x: object.kill.position.x, z: object.kill.position.z },
+      object: {
+        type: null,
+      },
+    };
+
+    scene.remove(object.kill.object.link);
+
+    console.log(gameArea);
+   // console.log(gameArea[object.kill.position.z][object.kill.position.x]);
   }
+
+  return false;
 };
 
 export const Render = (scene, gameArea, activeCell, removeCells) => {
@@ -56,6 +95,11 @@ export const Render = (scene, gameArea, activeCell, removeCells) => {
   // console.log(activeCell);
 
   //console.log(activeCell.metaData.object.queen);
+
+  console.log(`start `);
+  console.log(activeCell);
+  console.log(`end`);
+  
 
   ClearRemoveCells(scene, removeCells);
   AnalysisVariateStep(
@@ -67,7 +111,7 @@ export const Render = (scene, gameArea, activeCell, removeCells) => {
     removeCells
   );
 
-  console.log(gameArea);
+  //console.log(gameArea);
 
   return 1;
 };

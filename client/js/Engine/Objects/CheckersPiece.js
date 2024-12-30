@@ -3,7 +3,7 @@ import * as THREE from "three";
 export const CheckersPiece = (
   scene,
   gameArea,
-  object = { type: "checkerPiece", side: "other", queen: false,  link: null },
+  object = { type: "checkerPiece", side: "other", queen: false, link: null },
   position = { x: 0, z: 0 }
 ) => {
   // для удобство разбил сразу на 2
@@ -34,16 +34,29 @@ export const CheckersPiece = (
       });
       break;
     default:
-      piece.material = new THREE.MeshStandardMaterial({
-        color: 0x4cc926,
-        emissive: 0x4cc926,
-        emissiveIntensity: 1,
-        opacity: 0.3,
-        transparent: true,
-      });
+      if (object.type === "killer") {
+        piece.material = new THREE.MeshStandardMaterial({
+          color: 0xff0000,
+          emissive: 0xff0000,
+          emissiveIntensity: 1,
+          opacity: 0.3,
+          transparent: true,
+        });
 
-      piece.castShadow = false;
-      piece.receiveShadow = false;
+        piece.castShadow = false;
+        piece.receiveShadow = false;
+      } else {
+        piece.material = new THREE.MeshStandardMaterial({
+          color: 0x4cc926,
+          emissive: 0x4cc926,
+          emissiveIntensity: 1,
+          opacity: 0.3,
+          transparent: true,
+        });
+
+        piece.castShadow = false;
+        piece.receiveShadow = false;
+      }
       break;
   }
 

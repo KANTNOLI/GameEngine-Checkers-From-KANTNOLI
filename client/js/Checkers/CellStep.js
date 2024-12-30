@@ -1,7 +1,7 @@
 import { CheckersPiece } from "../Engine/Objects/CheckersPiece.js";
 
 export const CellStep = (scene, gameArea, position, object) => {
-  console.log(`x: ${position.x}, z: ${position.z} - step`);
+ // console.log(`x: ${position.x}, z: ${position.z} - step`);
 
   gameArea[object.original.metaData.position.z][
     object.original.metaData.position.x
