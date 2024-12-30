@@ -34,4 +34,5 @@ export const CellStep = (scene, gameArea, position, object) => {
 
   scene.add(newCell);
   scene.remove(object.original);
+  return newCell
 };

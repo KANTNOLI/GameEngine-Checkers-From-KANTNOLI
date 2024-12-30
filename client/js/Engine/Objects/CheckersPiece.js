@@ -27,11 +27,13 @@ export const CheckersPiece = (
       piece.material = new THREE.MeshStandardMaterial({
         color: 0x303030,
       });
+      gameArea[position.z][position.x].object.link = piece; // сохраняем ссылку, для удобной работы
       break;
     case "white":
       piece.material = new THREE.MeshStandardMaterial({
         color: 0xe0e0e0,
       });
+      gameArea[position.z][position.x].object.link = piece; // сохраняем ссылку, для удобной работы
       break;
     default:
       if (object.type === "killer") {
@@ -45,6 +47,9 @@ export const CheckersPiece = (
 
         piece.castShadow = false;
         piece.receiveShadow = false;
+
+        gameArea[position.z][position.x].object.link = piece; // сохраняем ссылку, для удобной работы
+        console.log(piece);
       } else {
         piece.material = new THREE.MeshStandardMaterial({
           color: 0x4cc926,
@@ -60,7 +65,6 @@ export const CheckersPiece = (
       break;
   }
 
-  gameArea[position.z][position.x].object.link = piece; // сохраняем ссылку, для удобной работы
   scene.add(piece);
 
   return piece;

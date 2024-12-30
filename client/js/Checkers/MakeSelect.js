@@ -7,15 +7,16 @@ export const MakeSelect = (
   original,
   nextStepX,
   nextStepZ,
+  side,
   type
 ) => {
   // console.log(`x: ${nextStepX}, z: ${nextStepZ} - select`);
 
   // создаем select
-  let select = CheckersPiece(
+  let select =  CheckersPiece(
     scene,
     gameArea,
-    { type: "checkerPiece", side: "other", link: null, type: type },
+    { type: type, side: side, link: null },
     {
       x: nextStepX,
       z: nextStepZ,

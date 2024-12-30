@@ -10,13 +10,14 @@ const directs = [
   { x: -1, z: 1, side: "black" },
 ];
 
-const AnalysisVariateStep = (
+const AnalysisVariateStep = async (
   scene,
   gameArea,
   original,
   position,
   object,
-  removeCells
+  removeCells,
+  killerFlag = false
 ) => {
   // while внутри фор для королевы для обработки линий
   // в будущ флаг для киллера
@@ -28,6 +29,7 @@ const AnalysisVariateStep = (
 
       // теперь мы добавляем ход если клетка пуста и движение следует правилам (Направления)
       if (
+        !killerFlag &&
         gameArea[nextStepZ] &&
         gameArea[nextStepZ][nextStepX] &&
         gameArea[nextStepZ][nextStepX].object.type === null &&
@@ -41,6 +43,7 @@ const AnalysisVariateStep = (
           original,
           nextStepX,
           nextStepZ,
+          "other",
           "other"
         );
       } else if (
@@ -58,20 +61,19 @@ const AnalysisVariateStep = (
           original,
           nextStepX + move.x,
           nextStepZ + move.z,
+          "other",
           "killer"
         ).metaData.object.kill = gameArea[nextStepZ][nextStepX];
       }
-      //
-      //
-      //
     }
   } else if (object.type === "other") {
     // если мы тыкаем на зеленую штуку делаем ход
     CellStep(scene, gameArea, position, object);
   } else if (object.type === "killer") {
-    // если мы тыкаем на зеленую штуку делаем ход
-    CellStep(scene, gameArea, position, object);
+    // если мы тыкаем на красную штуку делаем ход
+    let cell = CellStep(scene, gameArea, position, object);
 
+    // удаление противника
     gameArea[object.kill.position.z][object.kill.position.x] = {
       position: { x: object.kill.position.x, z: object.kill.position.z },
       object: {
@@ -80,15 +82,27 @@ const AnalysisVariateStep = (
     };
 
     scene.remove(object.kill.object.link);
-
-    console.log(gameArea);
-   // console.log(gameArea[object.kill.position.z][object.kill.position.x]);
+    AnalysisVariateStep(
+      scene,
+      gameArea,
+      cell,
+      cell.metaData.position,
+      cell.metaData.object,
+      removeCells,
+      true
+    );
   }
 
   return false;
 };
 
-export const Render = (scene, gameArea, activeCell, removeCells) => {
+export const Render = (
+  scene,
+  gameArea,
+  activeCell,
+  removeCells,
+  removeKiller
+) => {
   //   console.log(activeCell.metaData);
 
   // добавить в метадата булл свойство королевы
@@ -96,10 +110,9 @@ export const Render = (scene, gameArea, activeCell, removeCells) => {
 
   //console.log(activeCell.metaData.object.queen);
 
-  console.log(`start `);
-  console.log(activeCell);
-  console.log(`end`);
-  
+  // console.log(`start `);
+  // console.log(activeCell);
+  // console.log(`end`);
 
   ClearRemoveCells(scene, removeCells);
   AnalysisVariateStep(
