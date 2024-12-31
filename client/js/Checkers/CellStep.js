@@ -1,7 +1,8 @@
 import { CheckersPiece } from "../Engine/Objects/CheckersPiece.js";
+import { CheckQueen } from "./CheckQueen.js";
 
 export const CellStep = (scene, gameArea, position, object) => {
- // console.log(`x: ${position.x}, z: ${position.z} - step`);
+  // console.log(`x: ${position.x}, z: ${position.z} - step`);
 
   gameArea[object.original.metaData.position.z][
     object.original.metaData.position.x
@@ -14,6 +15,7 @@ export const CellStep = (scene, gameArea, position, object) => {
       type: null,
     },
   };
+
   // замена массива чобы ничего небыло
 
   gameArea[position.z][position.x] = {
@@ -21,6 +23,7 @@ export const CellStep = (scene, gameArea, position, object) => {
     object: {
       type: "checkerPiece",
       side: object.original.metaData.object.side,
+      queen: CheckQueen(position, object.original.metaData.object.side, object.original.metaData.object.queen),
       link: null,
     },
   };
@@ -34,5 +37,7 @@ export const CellStep = (scene, gameArea, position, object) => {
 
   scene.add(newCell);
   scene.remove(object.original);
-  return newCell
+
+  console.log(gameArea);
+  return newCell;
 };

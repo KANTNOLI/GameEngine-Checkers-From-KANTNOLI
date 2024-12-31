@@ -1,4 +1,3 @@
-import { CheckersPiece } from "../Engine/Objects/CheckersPiece.js";
 import { ClearRemoveCells } from "./ClearRemoveCells.js";
 import { MakeSelect } from "./MakeSelect.js";
 import { CellStep } from "./CellStep.js";
@@ -72,29 +71,16 @@ export const AnalysisVariateStep = async (
     CellStep(scene, gameArea, position, object);
   } else if (object.type === "killer") {
     // если мы тыкаем на красную штуку делаем ход
+    // когда будем подклбчать сокеты получать ответ есть ли возможность ударить или нет (bool)
     CellKill(scene, gameArea, position, object, removeCells);
   }
 
   return false;
 };
 
-export const Render = (
-  scene,
-  gameArea,
-  activeCell,
-  removeCells,
-  removeKiller
-) => {
-  //   console.log(activeCell.metaData);
-
-  // добавить в метадата булл свойство королевы
-  // console.log(activeCell);
-
-  //console.log(activeCell.metaData.object.queen);
-
-  // console.log(`start `);
-  // console.log(activeCell);
-  // console.log(`end`);
+export const Render = (scene, gameArea, activeCell, removeCells) => {
+  // проверку на килл выше поставить + флаг который не позволит 
+  // 
 
   ClearRemoveCells(scene, removeCells);
   AnalysisVariateStep(
