@@ -2,6 +2,7 @@ import { CheckersPiece } from "../Engine/Objects/CheckersPiece.js";
 import { ClearRemoveCells } from "./ClearRemoveCells.js";
 import { MakeSelect } from "./MakeSelect.js";
 import { CellStep } from "./CellStep.js";
+import { CellKill } from "./CellKill.js";
 
 const directs = [
   { x: 1, z: -1, side: "white" },
@@ -10,7 +11,7 @@ const directs = [
   { x: -1, z: 1, side: "black" },
 ];
 
-const AnalysisVariateStep = async (
+export const AnalysisVariateStep = async (
   scene,
   gameArea,
   original,
@@ -71,26 +72,7 @@ const AnalysisVariateStep = async (
     CellStep(scene, gameArea, position, object);
   } else if (object.type === "killer") {
     // если мы тыкаем на красную штуку делаем ход
-    let cell = CellStep(scene, gameArea, position, object);
-
-    // удаление противника
-    gameArea[object.kill.position.z][object.kill.position.x] = {
-      position: { x: object.kill.position.x, z: object.kill.position.z },
-      object: {
-        type: null,
-      },
-    };
-
-    scene.remove(object.kill.object.link);
-    AnalysisVariateStep(
-      scene,
-      gameArea,
-      cell,
-      cell.metaData.position,
-      cell.metaData.object,
-      removeCells,
-      true
-    );
+    CellKill(scene, gameArea, position, object, removeCells);
   }
 
   return false;

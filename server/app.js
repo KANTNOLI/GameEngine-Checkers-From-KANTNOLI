@@ -44,7 +44,8 @@ app.get("/api/game/online", (_, res) => {
 });
 
 app.listen(1000, () => {
-  console.log(`http://localhost:1000 client`);
+  console.log(`http://localhost:1000`);
+  console.log(`http://localhost:1000/game`);
 });
 
 // sockets
@@ -116,5 +117,5 @@ io.on("connection", (socket) => {
 
 // я видел вариант с обьеденением под 1 порт, но так мне больше нравится
 io.listen(3000, () => {
-  console.log(`http://localhost:3000 socket`);
+  console.log(`http://localhost:3000`);
 });
