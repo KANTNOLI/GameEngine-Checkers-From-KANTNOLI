@@ -49,7 +49,6 @@ export const CheckersPiece = (
         piece.receiveShadow = false;
 
         gameArea[position.z][position.x].object.link = piece; // сохраняем ссылку, для удобной работы
-        console.log(piece);
       } else {
         piece.material = new THREE.MeshStandardMaterial({
           color: 0x4cc926,
