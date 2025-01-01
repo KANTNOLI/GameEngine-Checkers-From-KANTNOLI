@@ -3,11 +3,11 @@ import { MakeSelect } from "./MakeSelect.js";
 import { CellStep } from "./CellStep.js";
 import { CellKill } from "./CellKill.js";
 
-const directs = [
-  { x: 1, z: -1, side: "white" },
-  { x: -1, z: -1, side: "white" },
-  { x: 1, z: 1, side: "black" },
-  { x: -1, z: 1, side: "black" },
+let directs = [
+  { x: 1, z: -1, side: "white", queenStop: false },
+  { x: -1, z: -1, side: "white", queenStop: false },
+  { x: 1, z: 1, side: "black", queenStop: false },
+  { x: -1, z: 1, side: "black", queenStop: false },
 ];
 
 export const AnalysisVariateStep = async (
@@ -20,16 +20,16 @@ export const AnalysisVariateStep = async (
   killerFlag = false
 ) => {
   if (object.type === "checkerPiece") {
+    console.log(directs);
+
     // рисовка путей
     for (const move of directs) {
       let nextStepX = position.x + move.x;
       let nextStepZ = position.z + move.z;
 
       while (true) {
-        // while внутри фор для королевы для обработки линий
-        // в будущ флаг для киллера
+        console.log(object.queen);
 
-        // теперь мы добавляем ход если клетка пуста и движение следует правилам (Направления)
         if (
           !killerFlag &&
           gameArea[nextStepZ] &&
@@ -37,8 +37,8 @@ export const AnalysisVariateStep = async (
           gameArea[nextStepZ][nextStepX].object.type === null &&
           (object.side === move.side || object.queen)
         ) {
-          console.log(object);
-          // функция которая создает зеленый ход
+          let counter = 1;
+          // если можем ходить
           MakeSelect(
             scene,
             gameArea,
@@ -49,7 +49,63 @@ export const AnalysisVariateStep = async (
             "other",
             "other"
           );
-          break;
+
+          while (true) {
+            if (
+              object.queen &&
+              gameArea[nextStepZ + move.z * counter] &&
+              gameArea[nextStepZ + move.z * counter][
+                nextStepX + move.x * counter
+              ] &&
+              gameArea[nextStepZ + move.z * counter][
+                nextStepX + move.x * counter
+              ].object.type === null
+            ) {
+              MakeSelect(
+                scene,
+                gameArea,
+                removeCells,
+                original,
+                nextStepX + move.x * counter,
+                nextStepZ + move.z * counter,
+                "other",
+                "other"
+              );
+
+              counter++;
+            } else if (
+              gameArea[nextStepZ + move.z + move.z * counter] &&
+              gameArea[nextStepZ + move.z + move.z * counter][
+                nextStepX + move.x + move.x * counter
+              ] &&
+              gameArea[nextStepZ + move.z * counter][
+                nextStepX + move.x * counter
+              ].object.type === "checkerPiece" &&
+              gameArea[nextStepZ + move.z * counter][
+                nextStepX + move.x * counter
+              ].object.side != object.side &&
+              gameArea[nextStepZ + move.z + move.z * counter][
+                nextStepX + move.x + move.x * counter
+              ].object.type === null
+            ) {
+              MakeSelect(
+                scene,
+                gameArea,
+                removeCells,
+                original,
+                nextStepX + move.x + move.x * counter,
+                nextStepZ + move.z + move.z * counter,
+                "other",
+                "killer"
+              ).metaData.object.kill =
+                gameArea[nextStepZ + move.z * counter][
+                  nextStepX + move.x * counter
+                ];
+              break;
+            } else {
+              break;
+            }
+          }
         } else if (
           gameArea[nextStepZ + move.z] &&
           gameArea[nextStepZ + move.z][nextStepX + move.x] &&
@@ -57,7 +113,7 @@ export const AnalysisVariateStep = async (
           gameArea[nextStepZ][nextStepX].object.side != object.side &&
           gameArea[nextStepZ + move.z][nextStepX + move.x].object.type === null
         ) {
-          // console.log(gameArea[nextStepZ][nextStepX]);
+          // если можем рубить
           MakeSelect(
             scene,
             gameArea,
@@ -70,7 +126,7 @@ export const AnalysisVariateStep = async (
           ).metaData.object.kill = gameArea[nextStepZ][nextStepX];
           break;
         }
-        break
+        break;
       }
     }
     //
