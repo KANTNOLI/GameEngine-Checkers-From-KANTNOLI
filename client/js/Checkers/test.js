@@ -68,4 +68,74 @@ if (object.queen) {
       );
 
 
-      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      let counter = 1;
+  while (true) {
+    killLine = killLine
+      ? killLine
+      : {
+          original: original,
+          z: nextStepZ,
+          x: nextStepX,
+        };
+
+    if (
+      gameArea[nextStepZ + move.z * counter] &&
+      gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter] &&
+      gameArea[nextStepZ + move.z][nextStepX + move.x].object.type === null
+    ) {
+      try {
+        MakeSelect(
+          scene,
+          gameArea,
+          removeCells,
+          killLine.original || original,
+          nextStepX + move.x * counter,
+          nextStepZ + move.z * counter,
+          "other",
+          "killer"
+        ).metaData.object.kill = gameArea[killLine.z][killLine.x];
+      } catch (error) {
+        break;
+      }
+
+      counter++;
+      console.log(killLine);
+    } else {
+      console.log(1);
+      break;
+    }
+  }

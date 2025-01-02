@@ -23,12 +23,13 @@ const renderStepsQueen = (
   let counter = 0;
 
   while (true) {
+    console.log(nextStepZ);
+    console.log(nextStepZ + move.z * counter);
+
     if (
-      gameArea[nextStepZ + nextStepZ * counter] &&
-      gameArea[nextStepZ + nextStepZ * counter][
-        nextStepX + nextStepZ * counter
-      ] &&
-      gameArea[nextStepZ + nextStepZ * counter][nextStepX + nextStepZ * counter]
+      gameArea[nextStepZ + move.z * counter] &&
+      gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter] &&
+      gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter]
         .object.type === null
     ) {
       MakeSelect(
@@ -36,12 +37,13 @@ const renderStepsQueen = (
         gameArea,
         removeCells,
         original,
-        nextStepX,
-        nextStepZ,
+        nextStepX + move.x * counter,
+        nextStepZ + move.z * counter,
         "other",
         "other"
       );
-      counter++
+      counter++;
+      console.log(`1`, 1);
     } else {
       break;
     }
