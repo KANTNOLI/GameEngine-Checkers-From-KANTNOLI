@@ -1,3 +1,9 @@
+**The plan for the coming week**
+**1.** Loading games
+**2.** Sockets link **(Game of 2 users)**
+**3.** Stats on game **(Count kills and other)**
+
+
 Installation (**1.0 release**) -> 
 - unpack to a convenient location      - (**require**)
 - (terminal) cd client                 - (optional)
