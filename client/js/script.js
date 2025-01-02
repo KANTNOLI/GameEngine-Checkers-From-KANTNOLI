@@ -14,6 +14,7 @@ import { TrackingClickItem } from "./Engine/PlayerActions/TrackingClickItem.js";
 
 import { LoadCheckers } from "./Checkers/LoadCheckers.js";
 import { Render } from "./Checkers/main.js";
+import { ClearRemoveCells } from "./Checkers/ClearRemoveCells.js";
 
 // const LOCALSTORE_ID = "ID";
 // const LOCALSTORE_ROOM_ID = "ROOM_ID";
@@ -127,6 +128,8 @@ window.addEventListener("click", async (event) => {
       TrackingClickItem(scene, camera, event).object,
       removeCells
     );
+  } else {
+    ClearRemoveCells(scene, removeCells);
   }
 });
 

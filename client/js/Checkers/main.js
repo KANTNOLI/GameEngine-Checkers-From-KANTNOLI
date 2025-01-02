@@ -27,6 +27,7 @@ export const AnalysisVariateStep = async (
       let nextStepZ = position.z + move.z;
 
       while (true) {
+        console.log("active !");
         if (
           !killerFlag &&
           gameArea[nextStepZ] &&
@@ -35,6 +36,7 @@ export const AnalysisVariateStep = async (
           (object.side === move.side || object.queen)
         ) {
           let counter = 1;
+          console.log("active !", counter);
           // если можем ходить
           MakeSelect(
             scene,
@@ -49,7 +51,7 @@ export const AnalysisVariateStep = async (
 
           while (true) {
             if (
-              killLine.type != "far" &&
+              !killerFlag &&
               object.queen &&
               gameArea[nextStepZ + move.z * counter] &&
               gameArea[nextStepZ + move.z * counter][
@@ -81,6 +83,7 @@ export const AnalysisVariateStep = async (
                 gameArea[nextStepZ + move.z + move.z * counter][
                   nextStepX + move.x + move.x * counter
                 ] &&
+                object.queen &&
                 gameArea[nextStepZ + move.z * counter][
                   nextStepX + move.x * counter
                 ].object.type === "checkerPiece" &&
@@ -91,6 +94,8 @@ export const AnalysisVariateStep = async (
                   nextStepX + move.x + move.x * counter
                 ].object.type === null)
             ) {
+              console.log(1);
+
               killLine = killLine
                 ? killLine
                 : {
@@ -122,7 +127,10 @@ export const AnalysisVariateStep = async (
           gameArea[nextStepZ][nextStepX].object.side != object.side &&
           gameArea[nextStepZ + move.z][nextStepX + move.x].object.type === null
         ) {
+          console.log("active 5");
+
           if (object.queen) {
+            console.log("active 4");
             let counter = 1;
             while (true) {
               killLine = killLine
@@ -141,24 +149,34 @@ export const AnalysisVariateStep = async (
                 gameArea[nextStepZ + move.z][nextStepX + move.x].object.type ===
                   null
               ) {
+                console.log("active 3");
                 // если можем рубить
-                MakeSelect(
-                  scene,
-                  gameArea,
-                  removeCells,
-                  killLine.original || original,
-                  nextStepX + move.x * counter,
-                  nextStepZ + move.z * counter,
-                  "other",
-                  "killer"
-                ).metaData.object.kill = gameArea[killLine.z][killLine.x];
+                try {
+                  MakeSelect(
+                    scene,
+                    gameArea,
+                    removeCells,
+                    killLine.original || original,
+                    nextStepX + move.x * counter,
+                    nextStepZ + move.z * counter,
+                    "other",
+                    "killer"
+                  ).metaData.object.kill = gameArea[killLine.z][killLine.x];
+                } catch (error) {
+                  console.log(`0`, 0);
+                }
+
                 counter++;
                 console.log(killLine);
               } else {
                 console.log(1);
                 break;
               }
+
+              console.log("active 2");
             }
+
+            console.log("active 1");
           } else {
             MakeSelect(
               scene,
@@ -190,6 +208,8 @@ export const AnalysisVariateStep = async (
 };
 
 export const Render = (scene, gameArea, activeCell, removeCells) => {
+  console.log(activeCell.metaData.object.queen);
+
   // проверку на килл выше поставить + флаг который не позволит
 
   ClearRemoveCells(scene, removeCells);
