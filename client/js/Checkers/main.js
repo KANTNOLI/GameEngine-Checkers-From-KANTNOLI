@@ -20,13 +20,17 @@ const renderStepsQueen = (
   removeCells,
   killLine
 ) => {
+  let saveParams = {
+    original: null,
+    x: null,
+    z: null,
+  };
+  let missDefaultStep = false;
   let counter = 0;
 
   while (true) {
-    console.log(nextStepZ);
-    console.log(nextStepZ + move.z * counter);
-
     if (
+      !missDefaultStep &&
       gameArea[nextStepZ + move.z * counter] &&
       gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter] &&
       gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter]
@@ -43,7 +47,46 @@ const renderStepsQueen = (
         "other"
       );
       counter++;
-      console.log(`1`, 1);
+    } else if (
+      !missDefaultStep &&
+      gameArea[nextStepZ + move.z * counter] &&
+      gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter] &&
+      gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter]
+        .object.type === "checkerPiece"
+    ) {
+      saveParams = {
+        original: original,
+        x: nextStepX + move.x * counter,
+        z: nextStepZ + move.z * counter,
+      };
+      missDefaultStep = true;
+      counter++;
+    } else if (
+      missDefaultStep &&
+      gameArea[nextStepZ + move.z * counter] &&
+      gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter]
+    ) {
+      if (
+        gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter]
+          .object.type === null
+      ) {
+        let temp = MakeSelect(
+          scene,
+          gameArea,
+          removeCells,
+          saveParams.original,
+          nextStepX + move.x * counter,
+          nextStepZ + move.z * counter,
+          "other",
+          "killer"
+        );
+        console.log(temp);
+        temp.metaData.object.kill = gameArea[saveParams.z][saveParams.x];
+
+        counter++;
+      } else {
+        break;
+      }
     } else {
       break;
     }
