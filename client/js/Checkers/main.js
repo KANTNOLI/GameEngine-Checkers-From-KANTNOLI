@@ -20,40 +20,29 @@ const renderStepsQueen = (
   removeCells,
   killLine
 ) => {
-  let counter = 1;
+  let counter = 0;
+
   while (true) {
-    killLine = killLine
-      ? killLine
-      : {
-          original: original,
-          z: nextStepZ,
-          x: nextStepX,
-        };
-
     if (
-      gameArea[nextStepZ + move.z * counter] &&
-      gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter] &&
-      gameArea[nextStepZ + move.z][nextStepX + move.x].object.type === null
+      gameArea[nextStepZ + nextStepZ * counter] &&
+      gameArea[nextStepZ + nextStepZ * counter][
+        nextStepX + nextStepZ * counter
+      ] &&
+      gameArea[nextStepZ + nextStepZ * counter][nextStepX + nextStepZ * counter]
+        .object.type === null
     ) {
-      try {
-        MakeSelect(
-          scene,
-          gameArea,
-          removeCells,
-          killLine.original || original,
-          nextStepX + move.x * counter,
-          nextStepZ + move.z * counter,
-          "other",
-          "killer"
-        ).metaData.object.kill = gameArea[killLine.z][killLine.x];
-      } catch (error) {
-        break;
-      }
-
-      counter++;
-      console.log(killLine);
+      MakeSelect(
+        scene,
+        gameArea,
+        removeCells,
+        original,
+        nextStepX,
+        nextStepZ,
+        "other",
+        "other"
+      );
+      counter++
     } else {
-      console.log(1);
       break;
     }
   }
@@ -105,8 +94,23 @@ export const AnalysisVariateStep = async (
             "other"
           );
           console.log(gameArea[nextStepZ][nextStepX]);
-        } else if(){
-          
+        } else if (
+          gameArea[nextStepZ] &&
+          gameArea[nextStepZ][nextStepX] &&
+          gameArea[nextStepZ][nextStepX].object.type === "checkerPiece" &&
+          gameArea[nextStepZ][nextStepX].object.side != object.side &&
+          gameArea[nextStepZ + move.z][nextStepX + move.x].object.type === null
+        ) {
+          MakeSelect(
+            scene,
+            gameArea,
+            removeCells,
+            original,
+            nextStepX + move.x,
+            nextStepZ + move.z,
+            "other",
+            "killer"
+          ).metaData.object.kill = gameArea[nextStepZ][nextStepX];
         }
       }
     }
