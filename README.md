@@ -19,6 +19,7 @@ Engine (**0.7.4**) ->
 P.S. **Before the release of 1.0 or 2.0**, depending on the circumstances, most of the functions will be aimed specifically at my task. After that, the engine will be upgraded to the ability to create different other simple ones
 
 **Actual release**
-![image](https://github.com/user-attachments/assets/8d1486ec-60ee-4d01-89e5-fd7a0374a385)
+![image](https://github.com/user-attachments/assets/277990c7-983c-4e2c-9d83-12d47563e94e)
+
 
 
