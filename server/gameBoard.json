@@ -9,10 +9,7 @@
     {
       "position": { "x": 1, "z": 0 },
       "object": {
-        "type": "checkerPiece",
-        "side": "black",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
@@ -24,10 +21,7 @@
     {
       "position": { "x": 3, "z": 0 },
       "object": {
-        "type": "checkerPiece",
-        "side": "black",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
@@ -39,10 +33,7 @@
     {
       "position": { "x": 5, "z": 0 },
       "object": {
-        "type": "checkerPiece",
-        "side": "black",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
@@ -54,10 +45,7 @@
     {
       "position": { "x": 7, "z": 0 },
       "object": {
-        "type": "checkerPiece",
-        "side": "black",
-        "queen": false,
-        "link": null
+        "type": null
       }
     }
   ],
@@ -65,10 +53,7 @@
     {
       "position": { "x": 0, "z": 1 },
       "object": {
-        "type": "checkerPiece",
-        "side": "black",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
@@ -80,10 +65,7 @@
     {
       "position": { "x": 2, "z": 1 },
       "object": {
-        "type": "checkerPiece",
-        "side": "black",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
@@ -95,10 +77,7 @@
     {
       "position": { "x": 4, "z": 1 },
       "object": {
-        "type": "checkerPiece",
-        "side": "black",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
@@ -110,10 +89,7 @@
     {
       "position": { "x": 6, "z": 1 },
       "object": {
-        "type": "checkerPiece",
-        "side": "black",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
@@ -133,10 +109,7 @@
     {
       "position": { "x": 1, "z": 2 },
       "object": {
-        "type": "checkerPiece",
-        "side": "black",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
@@ -148,10 +121,7 @@
     {
       "position": { "x": 3, "z": 2 },
       "object": {
-        "type": "checkerPiece",
-        "side": "black",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
@@ -163,10 +133,7 @@
     {
       "position": { "x": 5, "z": 2 },
       "object": {
-        "type": "checkerPiece",
-        "side": "black",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
@@ -178,10 +145,7 @@
     {
       "position": { "x": 7, "z": 2 },
       "object": {
-        "type": "checkerPiece",
-        "side": "black",
-        "queen": false,
-        "link": null
+        "type": null
       }
     }
   ],
@@ -245,7 +209,10 @@
     {
       "position": { "x": 1, "z": 4 },
       "object": {
-        "type": null
+        "type": "checkerPiece",
+        "side": "white",
+        "queen": false,
+        "link": null
       }
     },
     {
@@ -257,7 +224,10 @@
     {
       "position": { "x": 3, "z": 4 },
       "object": {
-        "type": null
+        "type": "checkerPiece",
+        "side": "white",
+        "queen": false,
+        "link": null
       }
     },
     {
@@ -269,7 +239,10 @@
     {
       "position": { "x": 5, "z": 4 },
       "object": {
-        "type": null
+        "type": "checkerPiece",
+        "side": "white",
+        "queen": false,
+        "link": null
       }
     },
     {
@@ -289,10 +262,7 @@
     {
       "position": { "x": 0, "z": 5 },
       "object": {
-        "type": "checkerPiece",
-        "side": "white",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
@@ -304,10 +274,7 @@
     {
       "position": { "x": 2, "z": 5 },
       "object": {
-        "type": "checkerPiece",
-        "side": "white",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
@@ -319,10 +286,7 @@
     {
       "position": { "x": 4, "z": 5 },
       "object": {
-        "type": "checkerPiece",
-        "side": "white",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
@@ -335,8 +299,8 @@
       "position": { "x": 6, "z": 5 },
       "object": {
         "type": "checkerPiece",
-        "side": "white",
-        "queen": false,
+        "side": "black",
+        "queen": true,
         "link": null
       }
     },
@@ -357,10 +321,7 @@
     {
       "position": { "x": 1, "z": 6 },
       "object": {
-        "type": "checkerPiece",
-        "side": "white",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
@@ -372,10 +333,7 @@
     {
       "position": { "x": 3, "z": 6 },
       "object": {
-        "type": "checkerPiece",
-        "side": "white",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
@@ -402,10 +360,7 @@
     {
       "position": { "x": 7, "z": 6 },
       "object": {
-        "type": "checkerPiece",
-        "side": "white",
-        "queen": false,
-        "link": null
+        "type": null
       }
     }
   ],
@@ -413,10 +368,7 @@
     {
       "position": { "x": 0, "z": 7 },
       "object": {
-        "type": "checkerPiece",
-        "side": "white",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
@@ -428,10 +380,7 @@
     {
       "position": { "x": 2, "z": 7 },
       "object": {
-        "type": "checkerPiece",
-        "side": "white",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
@@ -443,10 +392,7 @@
     {
       "position": { "x": 4, "z": 7 },
       "object": {
-        "type": "checkerPiece",
-        "side": "white",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
@@ -458,10 +404,7 @@
     {
       "position": { "x": 6, "z": 7 },
       "object": {
-        "type": "checkerPiece",
-        "side": "white",
-        "queen": false,
-        "link": null
+        "type": null
       }
     },
     {
