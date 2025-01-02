@@ -1,4 +1,4 @@
-Installation (**0.7.4**) -> 
+Installation (**1.0 release**) -> 
 - unpack to a convenient location      - (**require**)
 - (terminal) cd client                 - (optional)
 - (terminal) npm i                     - (optional)
@@ -18,16 +18,7 @@ Engine (**0.7.4**) ->
 
 P.S. **Before the release of 1.0 or 2.0**, depending on the circumstances, most of the functions will be aimed specifically at my task. After that, the engine will be upgraded to the ability to create different other simple ones
 
-**0.6.5**
-![image](https://github.com/user-attachments/assets/1d6c6177-5955-4d17-9984-c91758a4e62e)
-
-**0.7.1**
-![image](https://github.com/user-attachments/assets/573a2f1e-1efc-4508-a93a-6bab04d6293b)
-
-**0.7.4**
-![image](https://github.com/user-attachments/assets/48663719-c16f-4d8f-b299-ec079d6b8e1f)
-
-**0.8.1**
-![image](https://github.com/user-attachments/assets/126f0071-1011-4c54-8f11-7251b31c07c4)
+**Actual release**
+![image](https://github.com/user-attachments/assets/8d1486ec-60ee-4d01-89e5-fd7a0374a385)
 
 
