@@ -49,7 +49,7 @@ export const AnalysisVariateStep = async (
 
           while (true) {
             if (
-              !killLine &&
+              killLine.type != "far" &&
               object.queen &&
               gameArea[nextStepZ + move.z * counter] &&
               gameArea[nextStepZ + move.z * counter][
@@ -94,6 +94,7 @@ export const AnalysisVariateStep = async (
               killLine = killLine
                 ? killLine
                 : {
+                    type: "far",
                     original: original,
                     z: nextStepZ + move.z * counter,
                     x: nextStepX + move.x * counter,
@@ -110,7 +111,6 @@ export const AnalysisVariateStep = async (
                 "killer"
               ).metaData.object.kill = gameArea[killLine.z][killLine.x];
               counter++;
-              console.log(killLine);
             } else {
               break;
             }
@@ -122,18 +122,56 @@ export const AnalysisVariateStep = async (
           gameArea[nextStepZ][nextStepX].object.side != object.side &&
           gameArea[nextStepZ + move.z][nextStepX + move.x].object.type === null
         ) {
-          // если можем рубить
-          MakeSelect(
-            scene,
-            gameArea,
-            removeCells,
-            original,
-            nextStepX + move.x,
-            nextStepZ + move.z,
-            "other",
-            "killer"
-          ).metaData.object.kill = gameArea[nextStepZ][nextStepX];
-          break;
+          if (object.queen) {
+            let counter = 1;
+            while (true) {
+              killLine = killLine
+                ? killLine
+                : {
+                    original: original,
+                    z: nextStepZ,
+                    x: nextStepX,
+                  };
+
+              if (
+                gameArea[nextStepZ + move.z * counter] &&
+                gameArea[nextStepZ + move.z * counter][
+                  nextStepX + move.x * counter
+                ] &&
+                gameArea[nextStepZ + move.z][nextStepX + move.x].object.type ===
+                  null
+              ) {
+                // если можем рубить
+                MakeSelect(
+                  scene,
+                  gameArea,
+                  removeCells,
+                  killLine.original || original,
+                  nextStepX + move.x * counter,
+                  nextStepZ + move.z * counter,
+                  "other",
+                  "killer"
+                ).metaData.object.kill = gameArea[killLine.z][killLine.x];
+                counter++;
+                console.log(killLine);
+              } else {
+                console.log(1);
+                break;
+              }
+            }
+          } else {
+            MakeSelect(
+              scene,
+              gameArea,
+              removeCells,
+              original,
+              nextStepX + move.x,
+              nextStepZ + move.z,
+              "other",
+              "killer"
+            ).metaData.object.kill = gameArea[nextStepZ][nextStepX];
+            break;
+          }
         }
         break;
       }
@@ -153,9 +191,6 @@ export const AnalysisVariateStep = async (
 
 export const Render = (scene, gameArea, activeCell, removeCells) => {
   // проверку на килл выше поставить + флаг который не позволит
-  //
-
-  console.log(activeCell);
 
   ClearRemoveCells(scene, removeCells);
   AnalysisVariateStep(
