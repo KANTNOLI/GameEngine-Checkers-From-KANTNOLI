@@ -17,19 +17,16 @@ export const AnalysisVariateStep = async (
   position,
   object,
   removeCells,
-  killerFlag = false
+  killerFlag = false,
+  killLine = false
 ) => {
   if (object.type === "checkerPiece") {
-    console.log(directs);
-
     // рисовка путей
     for (const move of directs) {
       let nextStepX = position.x + move.x;
       let nextStepZ = position.z + move.z;
 
       while (true) {
-        console.log(object.queen);
-
         if (
           !killerFlag &&
           gameArea[nextStepZ] &&
@@ -52,6 +49,7 @@ export const AnalysisVariateStep = async (
 
           while (true) {
             if (
+              !killLine &&
               object.queen &&
               gameArea[nextStepZ + move.z * counter] &&
               gameArea[nextStepZ + move.z * counter][
@@ -74,34 +72,45 @@ export const AnalysisVariateStep = async (
 
               counter++;
             } else if (
-              gameArea[nextStepZ + move.z + move.z * counter] &&
-              gameArea[nextStepZ + move.z + move.z * counter][
-                nextStepX + move.x + move.x * counter
-              ] &&
-              gameArea[nextStepZ + move.z * counter][
-                nextStepX + move.x * counter
-              ].object.type === "checkerPiece" &&
-              gameArea[nextStepZ + move.z * counter][
-                nextStepX + move.x * counter
-              ].object.side != object.side &&
-              gameArea[nextStepZ + move.z + move.z * counter][
-                nextStepX + move.x + move.x * counter
-              ].object.type === null
+              (killLine &&
+                gameArea[nextStepZ + move.z + move.z * counter] &&
+                gameArea[nextStepZ + move.z + move.z * counter][
+                  nextStepX + move.x + move.x * counter
+                ]) ||
+              (gameArea[nextStepZ + move.z + move.z * counter] &&
+                gameArea[nextStepZ + move.z + move.z * counter][
+                  nextStepX + move.x + move.x * counter
+                ] &&
+                gameArea[nextStepZ + move.z * counter][
+                  nextStepX + move.x * counter
+                ].object.type === "checkerPiece" &&
+                gameArea[nextStepZ + move.z * counter][
+                  nextStepX + move.x * counter
+                ].object.side != object.side &&
+                gameArea[nextStepZ + move.z + move.z * counter][
+                  nextStepX + move.x + move.x * counter
+                ].object.type === null)
             ) {
+              killLine = killLine
+                ? killLine
+                : {
+                    original: original,
+                    z: nextStepZ + move.z * counter,
+                    x: nextStepX + move.x * counter,
+                  };
+
               MakeSelect(
                 scene,
                 gameArea,
                 removeCells,
-                original,
+                killLine.original || original,
                 nextStepX + move.x + move.x * counter,
                 nextStepZ + move.z + move.z * counter,
                 "other",
                 "killer"
-              ).metaData.object.kill =
-                gameArea[nextStepZ + move.z * counter][
-                  nextStepX + move.x * counter
-                ];
-              break;
+              ).metaData.object.kill = gameArea[killLine.z][killLine.x];
+              counter++;
+              console.log(killLine);
             } else {
               break;
             }
@@ -145,6 +154,8 @@ export const AnalysisVariateStep = async (
 export const Render = (scene, gameArea, activeCell, removeCells) => {
   // проверку на килл выше поставить + флаг который не позволит
   //
+
+  console.log(activeCell);
 
   ClearRemoveCells(scene, removeCells);
   AnalysisVariateStep(
