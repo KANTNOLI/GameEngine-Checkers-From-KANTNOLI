@@ -5,10 +5,10 @@ import { CellStep } from "./CellStep.js";
 import { CellKill } from "./CellKill.js";
 
 let directs = [
-  { x: 1, z: -1, side: "white", queenStop: false },
-  { x: -1, z: -1, side: "white", queenStop: false },
-  { x: 1, z: 1, side: "black", queenStop: false },
-  { x: -1, z: 1, side: "black", queenStop: false },
+  { x: 1, z: -1, side: "white" },
+  { x: -1, z: -1, side: "white" },
+  { x: 1, z: 1, side: "black" },
+  { x: -1, z: 1, side: "black" },
 ];
 
 export const AnalysisVariateStep = async (
@@ -21,12 +21,16 @@ export const AnalysisVariateStep = async (
   onlyKills = false
 ) => {
   if (object.type === "checkerPiece") {
-    // рисовка путей
+    // Тут мы берем направление и далее работаем с ним
+    // с помощью условий
     for (const move of directs) {
+      // для простоты анализа след хода
       let nextStepX = position.x + move.x;
       let nextStepZ = position.z + move.z;
 
       if (object.queen) {
+        // перенаправляемся в функцию для королев
+        // в случае если мы играем за королеву
         RenderStepsQueen(
           scene,
           gameArea,
@@ -38,7 +42,8 @@ export const AnalysisVariateStep = async (
           onlyKills
         );
       } else {
-        // логика для ходьбы и рубки
+        // в другом случае у нас обычная шашка
+        // делаем анализ относительно направления
         if (
           !onlyKills &&
           object.side === move.side &&
@@ -46,6 +51,8 @@ export const AnalysisVariateStep = async (
           gameArea[nextStepZ][nextStepX] &&
           gameArea[nextStepZ][nextStepX].object.type === null
         ) {
+          // если след клетка пуска, то показываем
+          // что можно сюда пойти
           MakeSelect(
             scene,
             gameArea,
@@ -56,7 +63,6 @@ export const AnalysisVariateStep = async (
             "other",
             "other"
           );
-          console.log(gameArea[nextStepZ][nextStepX]);
         } else if (
           gameArea[nextStepZ] &&
           gameArea[nextStepZ][nextStepX] &&
@@ -64,6 +70,10 @@ export const AnalysisVariateStep = async (
           gameArea[nextStepZ][nextStepX].object.side != object.side &&
           gameArea[nextStepZ + move.z][nextStepX + move.x].object.type === null
         ) {
+          // Если клетка не пустая, а на ней другая шашка
+          // то смотрим, после нее свободно? если да
+          // то показываем, что можно срубитт добавляя
+          // доп данные
           MakeSelect(
             scene,
             gameArea,
@@ -78,21 +88,21 @@ export const AnalysisVariateStep = async (
       }
     }
   } else if (object.type === "other") {
-    // если мы тыкаем на зеленую штуку делаем ход
+    // в случае нажатия на зеленую пешку
+    // которой мы показываем возможность ходить
     CellStep(scene, gameArea, position, object);
   } else if (object.type === "killer") {
-    // если мы тыкаем на красную штуку делаем ход
-    // когда будем подклбчать сокеты получать ответ есть ли возможность ударить или нет (bool)
+    // в случае нажатия на красную пешку
+    // которой мы показываем возможность рубить
     CellKill(scene, gameArea, position, object, removeCells);
   }
-
   return false;
 };
 
 export const Render = (scene, gameArea, activeCell, removeCells) => {
-  console.log(activeCell.metaData.object.queen);
 
-  // проверку на килл выше поставить + флаг который не позволит
+  // После выбора пешки, очищаем прошлую разметку
+  // и рисуем новую
 
   ClearRemoveCells(scene, removeCells);
   AnalysisVariateStep(
@@ -103,8 +113,6 @@ export const Render = (scene, gameArea, activeCell, removeCells) => {
     activeCell.metaData.object,
     removeCells
   );
-
-  //console.log(gameArea);
 
   return 1;
 };

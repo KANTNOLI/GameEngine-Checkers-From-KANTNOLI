@@ -10,11 +10,13 @@ export const RenderStepsQueen = (
   removeCells,
   onlyKills
 ) => {
+  // данные пешки, которую будем убирать (условно)
   let saveParams = {
     original: null,
     x: null,
     z: null,
   };
+  // для пропуска обычных ходов
   let missDefaultStep = false;
   let counter = 0;
 
@@ -26,6 +28,7 @@ export const RenderStepsQueen = (
       gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter]
         .object.type === null
     ) {
+      // если пусто, можно ходить
       if (!onlyKills) {
         MakeSelect(
           scene,
@@ -47,6 +50,7 @@ export const RenderStepsQueen = (
       gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter]
         .object.type === "checkerPiece"
     ) {
+      // если можно рубить, делаем сплит по рубке
       saveParams = {
         original: original,
         x: nextStepX + move.x * counter,
@@ -63,7 +67,11 @@ export const RenderStepsQueen = (
         gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter]
           .object.type === null
       ) {
-        let temp = MakeSelect(
+        // тут мы рубим, в прошлой мы давали разрешение
+        // такой прикольный ход для пропуска шашки
+        // которую будем рубить не иксуя код в 2 раза
+        // как было при 2 попытке, ну или 3
+        MakeSelect(
           scene,
           gameArea,
           removeCells,
@@ -72,8 +80,7 @@ export const RenderStepsQueen = (
           nextStepZ + move.z * counter,
           "other",
           "killer"
-        );
-        temp.metaData.object.kill = gameArea[saveParams.z][saveParams.x];
+        ).metaData.object.kill = gameArea[saveParams.z][saveParams.x];
 
         counter++;
       } else {
