@@ -26,7 +26,10 @@ export const MakeSelect = (
     // ссылка на оригинал на удаление при выборе
     select.metaData.object.original = original;
     // добавляем в массив который потом отправим на ремувинг
-    removeCells.push(select);
+    removeCells.push({
+      type: type,
+      select: select,
+    });
 
     return select;
   } else {

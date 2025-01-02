@@ -1,4 +1,5 @@
 import { ClearRemoveCells } from "./ClearRemoveCells.js";
+import { RenderStepsQueen } from "./RenderStepsQueen.js";
 import { MakeSelect } from "./MakeSelect.js";
 import { CellStep } from "./CellStep.js";
 import { CellKill } from "./CellKill.js";
@@ -10,89 +11,6 @@ let directs = [
   { x: -1, z: 1, side: "black", queenStop: false },
 ];
 
-const renderStepsQueen = (
-  scene,
-  gameArea,
-  original,
-  move,
-  nextStepZ,
-  nextStepX,
-  removeCells,
-  killLine
-) => {
-  let saveParams = {
-    original: null,
-    x: null,
-    z: null,
-  };
-  let missDefaultStep = false;
-  let counter = 0;
-
-  while (true) {
-    if (
-      !missDefaultStep &&
-      gameArea[nextStepZ + move.z * counter] &&
-      gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter] &&
-      gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter]
-        .object.type === null
-    ) {
-      MakeSelect(
-        scene,
-        gameArea,
-        removeCells,
-        original,
-        nextStepX + move.x * counter,
-        nextStepZ + move.z * counter,
-        "other",
-        "other"
-      );
-      counter++;
-    } else if (
-      !missDefaultStep &&
-      gameArea[nextStepZ + move.z * counter] &&
-      gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter] &&
-      gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter]
-        .object.type === "checkerPiece"
-    ) {
-      saveParams = {
-        original: original,
-        x: nextStepX + move.x * counter,
-        z: nextStepZ + move.z * counter,
-      };
-      missDefaultStep = true;
-      counter++;
-    } else if (
-      missDefaultStep &&
-      gameArea[nextStepZ + move.z * counter] &&
-      gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter]
-    ) {
-      if (
-        gameArea[nextStepZ + move.z * counter][nextStepX + move.x * counter]
-          .object.type === null
-      ) {
-        let temp = MakeSelect(
-          scene,
-          gameArea,
-          removeCells,
-          saveParams.original,
-          nextStepX + move.x * counter,
-          nextStepZ + move.z * counter,
-          "other",
-          "killer"
-        );
-        console.log(temp);
-        temp.metaData.object.kill = gameArea[saveParams.z][saveParams.x];
-
-        counter++;
-      } else {
-        break;
-      }
-    } else {
-      break;
-    }
-  }
-};
-
 export const AnalysisVariateStep = async (
   scene,
   gameArea,
@@ -100,8 +18,7 @@ export const AnalysisVariateStep = async (
   position,
   object,
   removeCells,
-  killerFlag = false,
-  killLine = false
+  onlyKills = false
 ) => {
   if (object.type === "checkerPiece") {
     // рисовка путей
@@ -110,7 +27,7 @@ export const AnalysisVariateStep = async (
       let nextStepZ = position.z + move.z;
 
       if (object.queen) {
-        renderStepsQueen(
+        RenderStepsQueen(
           scene,
           gameArea,
           original,
@@ -118,11 +35,12 @@ export const AnalysisVariateStep = async (
           nextStepZ,
           nextStepX,
           removeCells,
-          killLine
+          onlyKills
         );
       } else {
         // логика для ходьбы и рубки
         if (
+          !onlyKills &&
           object.side === move.side &&
           gameArea[nextStepZ] &&
           gameArea[nextStepZ][nextStepX] &&

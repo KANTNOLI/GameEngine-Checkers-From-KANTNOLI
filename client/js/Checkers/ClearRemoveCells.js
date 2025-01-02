@@ -1,10 +1,13 @@
-export const ClearRemoveCells = (scene, removeCells) => {
+export const ClearRemoveCells = (scene, removeCells, clearType = null) => {
+  // clearType (OnlyStep \ Null)
   if (removeCells) {
     removeCells.map((cell, id) => {
-      scene.remove(cell);
+      if (clearType && cell.type === "killer") {
+        scene.remove(cell.select);
+      } else {
+        scene.remove(cell.select);
+      }
     });
     removeCells.length = 0;
-    // тут я заюзал так, тю.к это поддерживает все ссылки если = []
-    // то элементы могут не удаляться должным образом
   }
 };
