@@ -123,9 +123,11 @@ io.on("connection", (socket) => {
     users[id].game.play = true;
   });
 
-  socket.on("gameStep", (data) => {
-    console.log(data);
-    io.to(data.room).emit("gameStepServer", data);
+  socket.on("gameStep", (step) => {
+    console.log(step);
+    rooms[step.room].motion =
+      rooms[step.room].motion === "white" ? "black" : "white";
+    io.to(step.room).emit("gameStepServer", step);
   });
 
   socket.on("disconnect", (_) => {

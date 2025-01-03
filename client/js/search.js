@@ -1,22 +1,22 @@
 import { io } from "https://cdn.socket.io/4.8.1/socket.io.esm.min.js";
 
-const LOCALSTORE_USER_ID = "OLD_USER_ID"
-const LOCALSTORE_ROOM_ID = "ROOM_ID"
+const LOCALSTORE_USER_ID = "OLD_USER_ID";
+const LOCALSTORE_ROOM_ID = "ROOM_ID";
 
 const socket = io("http://localhost:3000");
 
 let rooms = await fetch("/api/game/rooms").then((res) => res.json());
 const online = await fetch("/api/game/online").then((res) => res.json());
 
-// ставим значение онлайна по умолчанию 
+// ставим значение онлайна по умолчанию
 document.querySelector(".online").innerText = `Online: ${online}`;
- 
+
 // при выборе игры
 socket.on("gameStart", (roomID) => {
   // save id user and room
-  localStorage.setItem(LOCALSTORE_USER_ID, socket.id)
-  localStorage.setItem(LOCALSTORE_ROOM_ID, roomID)
-  window.location = `/game`
+  localStorage.setItem(LOCALSTORE_USER_ID, socket.id);
+  localStorage.setItem(LOCALSTORE_ROOM_ID, roomID);
+  window.location = `/game`;
 });
 
 // получаем онлайн int
@@ -24,7 +24,7 @@ socket.on("online", (online) => {
   document.querySelector(".online").innerText = `Online: ${online}`;
 });
 
-// чекаем создание новых номнат и делаем перерендер типо крутые 
+// чекаем создание новых номнат и делаем перерендер типо крутые
 socket.on("newRoom", (room) => {
   let div = document.createElement("div");
   div.classList.add("searchGame");
@@ -37,7 +37,7 @@ socket.on("newRoom", (room) => {
     const login = document.querySelector("#login");
 
     if (login.value.length >= 3) {
-      localStorage.setItem(LOCALSTORE_USER_ID, socket.id)
+      localStorage.setItem(LOCALSTORE_USER_ID, socket.id);
       socket.emit("joinRoom", {
         roomID: e.target.getAttribute("roomID"),
         owner: e.target.getAttribute("owner"),
@@ -71,7 +71,7 @@ for (const roomID in rooms) {
     const login = document.querySelector("#login");
 
     if (login.value.length >= 3) {
-      localStorage.setItem(LOCALSTORE_USER_ID, socket.id)
+      localStorage.setItem(LOCALSTORE_USER_ID, socket.id);
 
       socket.emit("joinRoom", {
         roomID: e.target.getAttribute("roomID"),
@@ -111,16 +111,11 @@ document.querySelector("button").addEventListener("click", async () => {
   const room = document.querySelector("#roomName");
   const nick = document.querySelector("#nickname");
 
-  document.querySelector("#createROOM").innerText = `room: ${room.value}`
-  document.querySelector("#createNAME").innerText = `await (${nick.value})`
+  document.querySelector("#createROOM").innerText = `room: ${room.value}`;
+  document.querySelector("#createNAME").innerText = `await (${nick.value})`;
 
   // проверка и создание
-  if (
-    side &&
-    room.value.length >= 3 &&
-    nick.value.length >= 3
-  ) {
-
+  if (side && room.value.length >= 3 && nick.value.length >= 3) {
     // отправка команаты на сервер и игрокам
     let tempRoom = {
       userID: null,
@@ -130,12 +125,13 @@ document.querySelector("button").addEventListener("click", async () => {
       serverOSave: null,
       player: null,
       serverPSave: null,
-      side: 
+      motion: "white",
+      side:
         side.value != "random"
           ? side.value
           : Math.floor(Math.random() * 2)
-            ? "black"
-            : "white",
+          ? "black"
+          : "white",
     };
 
     document.querySelector("#SectChooseGame").classList.add("none");
