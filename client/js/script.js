@@ -19,7 +19,11 @@ import { LoadingProcess } from "./Engine/OtherScripts/LoadingProcess.js";
 
 const LOCALSTORE_USER_ID = "OLD_USER_ID";
 const LOCALSTORE_USER_ACTIVE_ID = "USER_ID";
+const LOCALSTORE_SIDE_STEP = "SIDE_STEP";
+const LOCALSTORE_SIDE = "SIDE";
 const LOCALSTORE_ROOM_ID = "ROOM_ID";
+
+localStorage.setItem(LOCALSTORE_SIDE_STEP, "white");
 
 const socket = io("http://localhost:3000");
 
@@ -27,7 +31,27 @@ socket.on("connect", () => {
   localStorage.setItem(LOCALSTORE_USER_ACTIVE_ID, socket.id);
 });
 
+socket.on("gamePlayersSides", (sides) => {
+  if (sides.ownerID === socket.id) {
+    localStorage.setItem(LOCALSTORE_SIDE, sides.ownerSide);
+    console.log(`owner `, socket.id);
+  } else {
+    localStorage.setItem(LOCALSTORE_SIDE, sides.playerSide);
+    console.log(`player `, socket.id);
+  }
+
+  console.log(sides);
+});
+
 socket.on("gameStepServer", (step) => {
+  if (step.autor != socket.id) {
+    console.log(`противник `, step);
+  } else {
+    console.log(`я  `, step);
+  }
+});
+
+socket.on("gameStepQueue", (side) => {
   if (step.autor != socket.id) {
     console.log(`противник `, step);
   } else {

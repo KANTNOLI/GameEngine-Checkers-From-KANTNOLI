@@ -107,6 +107,14 @@ io.on("connection", (socket) => {
     io.to(joinParam.roomID).emit("gameStart", joinParam.roomID);
   });
 
+  ///
+
+  //
+
+  //
+  //
+  //
+
   socket.on("connectGames", (oldUserParam) => {
     if (rooms[oldUserParam.room].ownerID === oldUserParam.id) {
       rooms[oldUserParam.room].ownerID = socket.id;
@@ -117,6 +125,13 @@ io.on("connection", (socket) => {
     }
     users[socket.id].game.play = true;
     socket.join(oldUserParam.room);
+    console.log(rooms[oldUserParam.room]);
+    io.to(oldUserParam.room).emit("gamePlayersSides", {
+      ownerID: rooms[oldUserParam.room].ownerID,
+      ownerSide: rooms[oldUserParam.room].side,
+      playerID: rooms[oldUserParam.room].userID,
+      playerSide: rooms[oldUserParam.room].side === "white" ? "black" : "white",
+    });
   });
 
   socket.on("gameReady", (id) => {
@@ -127,6 +142,8 @@ io.on("connection", (socket) => {
     console.log(step);
     rooms[step.room].motion =
       rooms[step.room].motion === "white" ? "black" : "white";
+
+    io.to(step.room).emit("gameStepQueue", rooms[step.room].motion);
     io.to(step.room).emit("gameStepServer", step);
   });
 

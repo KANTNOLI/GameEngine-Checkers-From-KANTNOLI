@@ -7,6 +7,9 @@ import { CellStep } from "./CellStep.js";
 import { CellKill } from "./CellKill.js";
 import { StepSend } from "../Sockets/StepSend.js";
 
+const LOCALSTORE_SIDE_STEP = "SIDE_STEP";
+const LOCALSTORE_SIDE = "SIDE";
+
 let directs = [
   { x: 1, z: -1, side: "white" },
   { x: -1, z: -1, side: "white" },
@@ -27,9 +30,11 @@ export const AnalysisVariateStep = async (
   position,
   object,
   removeCells,
-  onlyKills = false
+  onlyKills = false,
+  playerSideStep,
+  playerSide
 ) => {
-  if (object.type === "checkerPiece") {
+  if (object.type === "checkerPiece" && playerSide === object.side) {
     // Тут мы берем направление и далее работаем с ним
     // с помощью условий
     for (const move of directs) {
@@ -37,6 +42,7 @@ export const AnalysisVariateStep = async (
       let nextStepX = position.x + move.x;
       let nextStepZ = position.z + move.z;
 
+      console.log(`move analize`);
       if (object.queen) {
         // перенаправляемся в функцию для королев
         // в случае если мы играем за королеву
@@ -60,6 +66,7 @@ export const AnalysisVariateStep = async (
           gameArea[nextStepZ][nextStepX] &&
           gameArea[nextStepZ][nextStepX].object.type === null
         ) {
+          console.log(`step`);
           // если след клетка пуска, то показываем
           // что можно сюда пойти
           MakeSelect(
@@ -109,7 +116,6 @@ export const AnalysisVariateStep = async (
     };
     StepSend(sendSteps);
     console.log(sendSteps);
-    
 
     sendSteps = {
       removeCells: [],
@@ -126,16 +132,28 @@ export const AnalysisVariateStep = async (
 export const Render = (scene, gameArea, activeCell, removeCells) => {
   // После выбора пешки, очищаем прошлую разметку
   // и рисуем новую
+  let playerSideStep = localStorage.getItem(LOCALSTORE_SIDE_STEP);
+  let playerSide = localStorage.getItem(LOCALSTORE_SIDE);
 
   ClearRemoveCells(scene, removeCells);
-  AnalysisVariateStep(
-    scene,
-    gameArea,
-    activeCell,
-    activeCell.metaData.position,
-    activeCell.metaData.object,
-    removeCells
-  );
+
+  if (playerSideStep == playerSide) {
+    AnalysisVariateStep(
+      scene,
+      gameArea,
+      activeCell,
+      activeCell.metaData.position,
+      activeCell.metaData.object,
+      removeCells,
+      false,
+      playerSideStep,
+      playerSide
+    );
+  }
+
+  console.log(playerSideStep);
+  console.log(playerSide);
+  console.log(playerSideStep == playerSide);
 
   return 1;
 };
