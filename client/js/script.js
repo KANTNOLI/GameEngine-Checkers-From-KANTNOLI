@@ -27,6 +27,14 @@ socket.on("connect", () => {
   localStorage.setItem(LOCALSTORE_USER_ACTIVE_ID, socket.id);
 });
 
+socket.on("gameStepServer", (step) => {
+  if (step.autor != socket.id) {
+    console.log(`противник `, step);
+  } else {
+    console.log(`я  `, step);
+  }
+});
+
 socket.emit("connectGames", {
   id: localStorage.getItem(LOCALSTORE_USER_ID),
   room: localStorage.getItem(LOCALSTORE_ROOM_ID),

@@ -1,8 +1,11 @@
+import { io } from "https://cdn.socket.io/4.8.1/socket.io.esm.min.js";
+
 import { ClearRemoveCells } from "./ClearRemoveCells.js";
 import { RenderStepsQueen } from "./RenderStepsQueen.js";
 import { MakeSelect } from "./MakeSelect.js";
 import { CellStep } from "./CellStep.js";
 import { CellKill } from "./CellKill.js";
+import { StepSend } from "../Sockets/StepSend.js";
 
 let directs = [
   { x: 1, z: -1, side: "white" },
@@ -10,6 +13,12 @@ let directs = [
   { x: 1, z: 1, side: "black" },
   { x: -1, z: 1, side: "black" },
 ];
+
+// будем отправлять для рендера ходов
+let sendSteps = {
+  removeCells: [],
+  createCell: null,
+};
 
 export const AnalysisVariateStep = async (
   scene,
@@ -90,7 +99,22 @@ export const AnalysisVariateStep = async (
   } else if (object.type === "other") {
     // в случае нажатия на зеленую пешку
     // которой мы показываем возможность ходить
-    CellStep(scene, gameArea, position, object);
+    sendSteps.removeCells.push({
+      x: object.original.metaData.position.x,
+      z: object.original.metaData.position.z,
+    });
+    sendSteps.createCell = {
+      metaData: CellStep(scene, gameArea, position, object).metaData,
+      position: position,
+    };
+    StepSend(sendSteps);
+    console.log(sendSteps);
+    
+
+    sendSteps = {
+      removeCells: [],
+      createCell: null,
+    };
   } else if (object.type === "killer") {
     // в случае нажатия на красную пешку
     // которой мы показываем возможность рубить
@@ -100,7 +124,6 @@ export const AnalysisVariateStep = async (
 };
 
 export const Render = (scene, gameArea, activeCell, removeCells) => {
-
   // После выбора пешки, очищаем прошлую разметку
   // и рисуем новую
 

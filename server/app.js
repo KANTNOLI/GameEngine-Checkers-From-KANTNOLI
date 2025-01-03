@@ -120,10 +120,12 @@ io.on("connection", (socket) => {
   });
 
   socket.on("gameReady", (id) => {
-    console.log(users);
     users[id].game.play = true;
-    console.log(id);
-    console.log("ready");
+  });
+
+  socket.on("gameStep", (data) => {
+    console.log(data);
+    io.to(data.room).emit("gameStepServer", data);
   });
 
   socket.on("disconnect", (_) => {

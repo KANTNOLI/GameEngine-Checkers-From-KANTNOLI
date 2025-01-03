@@ -17,7 +17,6 @@ export const CellStep = (scene, gameArea, position, object) => {
   };
 
   // замена массива чобы ничего небыло
-
   gameArea[position.z][position.x] = {
     position: { x: position.x, z: position.z },
     object: {
