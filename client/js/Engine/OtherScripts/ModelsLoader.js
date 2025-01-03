@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { LoadingProcess } from "./LoadingProcess.js";
+import { ReadySend } from "../../Sockets/ReadySend.js";
 
 // scene, camera, lighting, controls
 
@@ -63,6 +64,7 @@ export const ModelsLoader = async (
     if (state) {
       setTimeout(() => {
         LoadingProcess(state);
+        ReadySend()
       }, 1000);
     }
     return model;

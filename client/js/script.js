@@ -17,14 +17,22 @@ import { Render } from "./Checkers/main.js";
 import { ClearRemoveCells } from "./Checkers/ClearRemoveCells.js";
 import { LoadingProcess } from "./Engine/OtherScripts/LoadingProcess.js";
 
-// const LOCALSTORE_ID = "ID";
-// const LOCALSTORE_ROOM_ID = "ROOM_ID";
+const LOCALSTORE_USER_ID = "OLD_USER_ID";
+const LOCALSTORE_USER_ACTIVE_ID = "USER_ID";
+const LOCALSTORE_ROOM_ID = "ROOM_ID";
 
 const socket = io("http://localhost:3000");
 
-// console.log(localStorage.getItem(LOCALSTORE_ROOM_ID));   7/3
+socket.on("connect", () => {
+  localStorage.setItem(LOCALSTORE_USER_ACTIVE_ID, socket.id);
+});
 
-// socket.on("test", (data) => {
+socket.emit("connectGames", {
+  id: localStorage.getItem(LOCALSTORE_USER_ID),
+  room: localStorage.getItem(LOCALSTORE_ROOM_ID),
+});
+
+// socket.on("connectGames", (data) => {
 //   let text = document.createElement("p");
 //   text.innerText = data;
 

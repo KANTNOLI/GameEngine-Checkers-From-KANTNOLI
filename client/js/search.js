@@ -1,6 +1,6 @@
 import { io } from "https://cdn.socket.io/4.8.1/socket.io.esm.min.js";
 
-const LOCALSTORE_USER_ID = "USER_ID"
+const LOCALSTORE_USER_ID = "OLD_USER_ID"
 const LOCALSTORE_ROOM_ID = "ROOM_ID"
 
 const socket = io("http://localhost:3000");
@@ -10,13 +10,12 @@ const online = await fetch("/api/game/online").then((res) => res.json());
 
 // ставим значение онлайна по умолчанию 
 document.querySelector(".online").innerText = `Online: ${online}`;
-
+ 
 // при выборе игры
 socket.on("gameStart", (roomID) => {
   // save id user and room
   localStorage.setItem(LOCALSTORE_USER_ID, socket.id)
   localStorage.setItem(LOCALSTORE_ROOM_ID, roomID)
-  console.log("fojdfsojdfasokjdfasoklj");
   window.location = `/game`
 });
 
@@ -128,7 +127,10 @@ document.querySelector("button").addEventListener("click", async () => {
       ownerID: socket.id,
       room: room.value,
       owner: nick.value,
-      side:
+      serverOSave: null,
+      player: null,
+      serverPSave: null,
+      side: 
         side.value != "random"
           ? side.value
           : Math.floor(Math.random() * 2)

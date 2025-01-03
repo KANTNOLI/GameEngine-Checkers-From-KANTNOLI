@@ -18,8 +18,6 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "../client")));
 
 app.use((req, res, next) => {
-  console.log(req.url);
-
   next();
 });
 
@@ -84,6 +82,7 @@ io.on("connection", (socket) => {
     users[socket.id].game.side = roomParam.side;
 
     rooms[roomParam.room] = roomParam;
+    rooms[roomParam.room].serverOSave = users[socket.id];
     // notification for render rooms
     io.emit("newRoom", roomParam);
   });
@@ -98,10 +97,33 @@ io.on("connection", (socket) => {
     users[socket.id].room.roomID = joinParam.roomID;
     users[socket.id].room.owner = false;
 
+    rooms[joinParam.roomID].serverPSave = users[socket.id];
+    rooms[joinParam.roomID].player = joinParam.nickname;
     users[joinParam.owner].game.enemyID = socket.id;
     rooms[joinParam.roomID].userID = socket.id;
     // создаем комнату, кидаем ид румы чтобы потом слинковать и отправляем на /game
+    // console.log(users);
+
     io.to(joinParam.roomID).emit("gameStart", joinParam.roomID);
+  });
+
+  socket.on("connectGames", (oldUserParam) => {
+    if (rooms[oldUserParam.room].ownerID === oldUserParam.id) {
+      rooms[oldUserParam.room].ownerID = socket.id;
+      users[socket.id] = rooms[oldUserParam.room].serverOSave;
+    } else {
+      rooms[oldUserParam.room].userID = socket.id;
+      users[socket.id] = rooms[oldUserParam.room].serverPSave;
+    }
+    users[socket.id].game.play = true;
+    socket.join(oldUserParam.room);
+  });
+
+  socket.on("gameReady", (id) => {
+    console.log(users);
+    users[id].game.play = true;
+    console.log(id);
+    console.log("ready");
   });
 
   socket.on("disconnect", (_) => {
