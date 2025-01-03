@@ -1,18 +1,43 @@
-*{
-    border: 0;
-    padding: 0;
-    margin: 0;
+* {
+  border: 0;
+  padding: 0;
+  margin: 0;
 }
 
-body{
-    background-color: rgb(61, 61, 61);
+body {
+  background-color: rgb(61, 61, 61);
 }
 
-#chat{
-    padding: 10px;
-    color: white;
-    position: absolute;
-    width: 200px;
-    height: 400px;
-    background-color: rgba(0, 0, 0, 0.397);
+#Loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+  background-color: rgb(56, 56, 56);
+  z-index: 999;
+}
+
+#Loading img {
+  width: 10vw;
+}
+
+#LoadingTitle{
+  font-size: 18px;
+  color: white;
+  font-family: "Parkinsans", sans-serif;
+}
+
+
+
+#chat {
+  padding: 10px;
+  color: white;
+  position: absolute;
+  width: 200px;
+  height: 400px;
+  background-color: rgba(0, 0, 0, 0.397);
 }

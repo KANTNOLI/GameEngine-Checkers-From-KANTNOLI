@@ -15,6 +15,7 @@ import { TrackingClickItem } from "./Engine/PlayerActions/TrackingClickItem.js";
 import { LoadCheckers } from "./Checkers/LoadCheckers.js";
 import { Render } from "./Checkers/main.js";
 import { ClearRemoveCells } from "./Checkers/ClearRemoveCells.js";
+import { LoadingProcess } from "./Engine/OtherScripts/LoadingProcess.js";
 
 // const LOCALSTORE_ID = "ID";
 // const LOCALSTORE_ROOM_ID = "ROOM_ID";
@@ -89,7 +90,8 @@ ModelsLoader(
   { casting: true, receiving: true },
   { width: 1, height: 0.8, length: 1 },
   [camera, mainLight],
-  playerControlls
+  playerControlls,
+  null
 );
 ModelsLoader(
   scene,
@@ -110,7 +112,11 @@ ModelsLoader(
   "models/room.glb",
   { x: 0.5, y: -3.45, z: 0.2 },
   { casting: true, receiving: true },
-  { width: 0.04, height: 0.04, length: 0.04 }
+  { width: 0.04, height: 0.04, length: 0.04 },
+  null,
+  null,
+  null,
+  1
 );
 
 let removeCells = [];

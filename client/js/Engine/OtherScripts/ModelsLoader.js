@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { LoadingProcess } from "./LoadingProcess.js";
 
 // scene, camera, lighting, controls
 
@@ -11,7 +12,8 @@ export const ModelsLoader = async (
   scale = { width: 1, height: 1, length: 1 },
   looksAt = null,
   controll = null,
-  rotation = null
+  rotation = null,
+  state = null
 ) => {
   const modelsLoader = new GLTFLoader();
 
@@ -58,6 +60,11 @@ export const ModelsLoader = async (
 
     scene.add(model.scene);
 
+    if (state) {
+      setTimeout(() => {
+        LoadingProcess(state);
+      }, 1000);
+    }
     return model;
   });
 };
