@@ -125,7 +125,7 @@ io.on("connection", (socket) => {
     }
     users[socket.id].game.play = true;
     socket.join(oldUserParam.room);
-    console.log(rooms[oldUserParam.room]);
+
     io.to(oldUserParam.room).emit("gamePlayersSides", {
       ownerID: rooms[oldUserParam.room].ownerID,
       ownerSide: rooms[oldUserParam.room].side,

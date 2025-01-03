@@ -52,11 +52,8 @@ socket.on("gameStepServer", (step) => {
 });
 
 socket.on("gameStepQueue", (side) => {
-  if (step.autor != socket.id) {
-    console.log(`противник `, step);
-  } else {
-    console.log(`я  `, step);
-  }
+  localStorage.setItem(LOCALSTORE_SIDE_STEP, side);
+  console.log(side);
 });
 
 socket.emit("connectGames", {
