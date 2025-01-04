@@ -20,7 +20,7 @@ let directs = [
 // будем отправлять для рендера ходов
 let sendSteps = {
   removeCells: [],
-  createCell: null,
+  createCells: [],
 };
 
 export const AnalysisVariateStep = async (
@@ -110,16 +110,16 @@ export const AnalysisVariateStep = async (
       x: object.original.metaData.position.x,
       z: object.original.metaData.position.z,
     });
-    sendSteps.createCell = {
+    sendSteps.createCells.push({
       metaData: CellStep(scene, gameArea, position, object).metaData,
       position: position,
-    };
+    });
     StepSend(sendSteps);
     console.log(sendSteps);
 
     sendSteps = {
       removeCells: [],
-      createCell: null,
+      createCells: [],
     };
   } else if (object.type === "killer") {
     // в случае нажатия на красную пешку

@@ -31,6 +31,7 @@ socket.on("connect", () => {
   localStorage.setItem(LOCALSTORE_USER_ACTIVE_ID, socket.id);
 });
 
+//Получаем активную нащусторону для дальнейшей игры
 socket.on("gamePlayersSides", (sides) => {
   if (sides.ownerID === socket.id) {
     localStorage.setItem(LOCALSTORE_SIDE, sides.ownerSide);
@@ -43,11 +44,21 @@ socket.on("gamePlayersSides", (sides) => {
   console.log(sides);
 });
 
+// Получаем ход противника
 socket.on("gameStepServer", (step) => {
   if (step.autor != socket.id) {
-    console.log(`противник `, step);
+    const removeCells = step.step.removeCells;
+    const createCells = step.step.createCells;
+
+    removeCells.map((rCell, id) => {
+      console.log(`r `, rCell, " ", id);
+    });
+    createCells.map((cCell, id) => {
+      console.log(`c `, cCell, " ", id);
+    });
+    
   } else {
-    console.log(`я  `, step);
+    console.log(`я `);
   }
 });
 
@@ -56,6 +67,7 @@ socket.on("gameStepQueue", (side) => {
   console.log(side);
 });
 
+// Отправляем данные для линковки с прошлыми данными
 socket.emit("connectGames", {
   id: localStorage.getItem(LOCALSTORE_USER_ID),
   room: localStorage.getItem(LOCALSTORE_ROOM_ID),
