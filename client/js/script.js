@@ -17,6 +17,7 @@ import { Render } from "./Checkers/main.js";
 import { ClearRemoveCells } from "./Checkers/ClearRemoveCells.js";
 import { LoadingProcess } from "./Engine/OtherScripts/LoadingProcess.js";
 import { CellStep } from "./Checkers/CellStep.js";
+import { CellKill } from "./Checkers/CellKill.js";
 
 const LOCALSTORE_USER_ID = "OLD_USER_ID";
 const LOCALSTORE_USER_ACTIVE_ID = "USER_ID";
@@ -157,9 +158,23 @@ socket.on("gamePlayersSides", (sides) => {
 // Получаем ход противника
 socket.on("gameStepServer", (step) => {
   if (step.autor != socket.id) {
-    console.log(step.step);
+    if (step.step.type === "other") {
+      console.log("step");
 
-    CellStep(scene, gameArea, step.step.activePosition, step.step);
+      CellStep(scene, gameArea, step.step.activePosition, step.step);
+    } else {
+      CellKill(
+        scene,
+        gameArea,
+        step.step.activePosition,
+        step.step,
+        removeCells,
+        true
+      );
+    }
+    console.log("end");
+
+    console.log(step.step);
   } else {
     console.log(`я `);
   }

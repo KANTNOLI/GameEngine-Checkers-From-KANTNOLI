@@ -102,6 +102,7 @@ export const AnalysisVariateStep = async (
     // которой мы показываем возможность ходить
 
     let saveInfo = {
+      type: "other",
       side: object.original.metaData.object.side,
       activePosition: position,
       position: {
@@ -115,7 +116,23 @@ export const AnalysisVariateStep = async (
   } else if (object.type === "killer") {
     // в случае нажатия на красную пешку
     // которой мы показываем возможность рубить
-    CellKill(scene, gameArea, position, object, removeCells);
+    let saveInfo = {
+      type: "kill",
+      side: object.original.metaData.object.side,
+      activePosition: position,
+      positionKill: {
+        x: object.kill.position.x,
+        z: object.kill.position.z,
+      },
+      position: {
+        x: object.original.metaData.position.x,
+        z: object.original.metaData.position.z,
+      },
+      queen: object.original.metaData.object.queen,
+    };
+
+    StepSend(saveInfo);
+    CellKill(scene, gameArea, position, saveInfo, removeCells, true);
   }
   return false;
 };
@@ -142,9 +159,9 @@ export const Render = (scene, gameArea, activeCell, removeCells) => {
     );
   }
 
-  console.log(playerSideStep);
-  console.log(playerSide);
-  console.log(playerSideStep == playerSide);
+  // console.log(playerSideStep);
+  // console.log(playerSide);
+  // console.log(playerSideStep == playerSide);
 
   return 1;
 };

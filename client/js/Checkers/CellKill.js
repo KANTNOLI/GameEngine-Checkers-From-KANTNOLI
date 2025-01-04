@@ -1,26 +1,36 @@
 import { CellStep } from "./CellStep.js";
 import { AnalysisVariateStep } from "./main.js";
 
-
-export const CellKill = (scene, gameArea, position, object, removeCells) => {
-  let cell = CellStep(scene, gameArea, position, object);
+export const CellKill = (
+  scene,
+  gameArea,
+  position,
+  saveInfo,
+  removeCells,
+  skip = false
+) => {
+  let cell = CellStep(scene, gameArea, position, saveInfo);
 
   // удаление противника
-  gameArea[object.kill.position.z][object.kill.position.x] = {
-    position: { x: object.kill.position.x, z: object.kill.position.z },
+  scene.remove(
+    gameArea[saveInfo.positionKill.z][saveInfo.positionKill.x].object.link
+  );
+  gameArea[saveInfo.positionKill.z][saveInfo.positionKill.x] = {
+    position: { x: saveInfo.x, z: saveInfo.z },
     object: {
       type: null,
     },
   };
 
-  scene.remove(object.kill.object.link);
-  AnalysisVariateStep(
-    scene, 
-    gameArea,
-    cell,
-    cell.metaData.position,
-    cell.metaData.object,
-    removeCells,
-    true
-  );
+  if (!skip) {
+    AnalysisVariateStep(
+      scene,
+      gameArea,
+      cell,
+      cell.metaData.position,
+      cell.metaData.object,
+      removeCells,
+      true
+    );
+  }
 };

@@ -139,12 +139,16 @@ io.on("connection", (socket) => {
   });
 
   socket.on("gameStep", (step) => {
-    console.log(step);
+    console.log(step.autor);
+    console.log(step.room);
     rooms[step.room].motion =
       rooms[step.room].motion === "white" ? "black" : "white";
 
+    console.log(1);
     io.to(step.room).emit("gameStepQueue", rooms[step.room].motion);
+    console.log(2);
     io.to(step.room).emit("gameStepServer", step);
+    console.log(3);
   });
 
   socket.on("disconnect", (_) => {
