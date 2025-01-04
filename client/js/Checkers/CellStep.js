@@ -1,15 +1,21 @@
 import { CheckersPiece } from "../Engine/Objects/CheckersPiece.js";
 import { CheckQueen } from "./CheckQueen.js";
 
-export const CellStep = (scene, gameArea, position, object) => {
+export const CellStep = (scene, gameArea, position, info) => {
   // console.log(`x: ${position.x}, z: ${position.z} - step`);
 
-  gameArea[object.original.metaData.position.z][
-    object.original.metaData.position.x
+  scene.remove(
+    gameArea[info.position.z][
+      info.position.x
+    ].object.link
+  );
+
+  gameArea[info.position.z][
+    info.position.x
   ] = {
     position: {
-      x: object.original.metaData.position.x,
-      z: object.original.metaData.position.z,
+      x: info.position.x,
+      z: info.position.z,
     },
     object: {
       type: null,
@@ -21,8 +27,12 @@ export const CellStep = (scene, gameArea, position, object) => {
     position: { x: position.x, z: position.z },
     object: {
       type: "checkerPiece",
-      side: object.original.metaData.object.side,
-      queen: CheckQueen(position, object.original.metaData.object.side, object.original.metaData.object.queen),
+      side: info.side,
+      queen: CheckQueen(
+        position,
+        info.side,
+        info.queen
+      ),
       link: null,
     },
   };
@@ -35,7 +45,6 @@ export const CellStep = (scene, gameArea, position, object) => {
   );
 
   scene.add(newCell);
-  scene.remove(object.original);
 
   //console.log(gameArea);
   return newCell;

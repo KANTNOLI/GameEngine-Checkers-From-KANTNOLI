@@ -17,12 +17,6 @@ let directs = [
   { x: -1, z: 1, side: "black" },
 ];
 
-// будем отправлять для рендера ходов
-let sendSteps = {
-  removeCells: [],
-  createCells: [],
-};
-
 export const AnalysisVariateStep = async (
   scene,
   gameArea,
@@ -106,21 +100,18 @@ export const AnalysisVariateStep = async (
   } else if (object.type === "other") {
     // в случае нажатия на зеленую пешку
     // которой мы показываем возможность ходить
-    sendSteps.removeCells.push({
-      x: object.original.metaData.position.x,
-      z: object.original.metaData.position.z,
-    });
-    sendSteps.createCells.push({
-      metaData: CellStep(scene, gameArea, position, object).metaData,
-      position: position,
-    });
-    StepSend(sendSteps);
-    console.log(sendSteps);
 
-    sendSteps = {
-      removeCells: [],
-      createCells: [],
+    let saveInfo = {
+      side: object.original.metaData.object.side,
+      activePosition: position,
+      position: {
+        x: object.original.metaData.position.x,
+        z: object.original.metaData.position.z,
+      },
+      queen: object.original.metaData.object.queen,
     };
+    StepSend(saveInfo);
+    CellStep(scene, gameArea, position, saveInfo);
   } else if (object.type === "killer") {
     // в случае нажатия на красную пешку
     // которой мы показываем возможность рубить

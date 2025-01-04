@@ -16,6 +16,7 @@ import { LoadCheckers } from "./Checkers/LoadCheckers.js";
 import { Render } from "./Checkers/main.js";
 import { ClearRemoveCells } from "./Checkers/ClearRemoveCells.js";
 import { LoadingProcess } from "./Engine/OtherScripts/LoadingProcess.js";
+import { CellStep } from "./Checkers/CellStep.js";
 
 const LOCALSTORE_USER_ID = "OLD_USER_ID";
 const LOCALSTORE_USER_ACTIVE_ID = "USER_ID";
@@ -24,62 +25,6 @@ const LOCALSTORE_SIDE = "SIDE";
 const LOCALSTORE_ROOM_ID = "ROOM_ID";
 
 localStorage.setItem(LOCALSTORE_SIDE_STEP, "white");
-
-const socket = io("http://localhost:3000");
-
-socket.on("connect", () => {
-  localStorage.setItem(LOCALSTORE_USER_ACTIVE_ID, socket.id);
-});
-
-//Получаем активную нащусторону для дальнейшей игры
-socket.on("gamePlayersSides", (sides) => {
-  if (sides.ownerID === socket.id) {
-    localStorage.setItem(LOCALSTORE_SIDE, sides.ownerSide);
-    console.log(`owner `, socket.id);
-  } else {
-    localStorage.setItem(LOCALSTORE_SIDE, sides.playerSide);
-    console.log(`player `, socket.id);
-  }
-
-  console.log(sides);
-});
-
-// Получаем ход противника
-socket.on("gameStepServer", (step) => {
-  if (step.autor != socket.id) {
-    const removeCells = step.step.removeCells;
-    const createCells = step.step.createCells;
-
-    removeCells.map((rCell, id) => {
-      console.log(`r `, rCell, " ", id);
-    });
-    createCells.map((cCell, id) => {
-      console.log(`c `, cCell, " ", id);
-    });
-    
-  } else {
-    console.log(`я `);
-  }
-});
-
-socket.on("gameStepQueue", (side) => {
-  localStorage.setItem(LOCALSTORE_SIDE_STEP, side);
-  console.log(side);
-});
-
-// Отправляем данные для линковки с прошлыми данными
-socket.emit("connectGames", {
-  id: localStorage.getItem(LOCALSTORE_USER_ID),
-  room: localStorage.getItem(LOCALSTORE_ROOM_ID),
-});
-
-// socket.on("connectGames", (data) => {
-//   let text = document.createElement("p");
-//   text.innerText = data;
-
-//   document.querySelector("#chat").append(text);
-//   console.log(data);
-// });
 
 let gameArea = await fetch("/api/board/default").then((res) => res.json());
 
@@ -187,6 +132,59 @@ window.addEventListener("click", async (event) => {
     ClearRemoveCells(scene, removeCells);
   }
 });
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+const socket = io("http://localhost:3000");
+
+socket.on("connect", () => {
+  localStorage.setItem(LOCALSTORE_USER_ACTIVE_ID, socket.id);
+});
+
+//Получаем активную нащусторону для дальнейшей игры
+socket.on("gamePlayersSides", (sides) => {
+  if (sides.ownerID === socket.id) {
+    localStorage.setItem(LOCALSTORE_SIDE, sides.ownerSide);
+    console.log(`owner `, socket.id);
+  } else {
+    localStorage.setItem(LOCALSTORE_SIDE, sides.playerSide);
+    console.log(`player `, socket.id);
+  }
+
+  console.log(sides);
+});
+
+// Получаем ход противника
+socket.on("gameStepServer", (step) => {
+  if (step.autor != socket.id) {
+    console.log(step.step);
+
+    CellStep(scene, gameArea, step.step.activePosition, step.step);
+  } else {
+    console.log(`я `);
+  }
+});
+
+socket.on("gameStepQueue", (side) => {
+  localStorage.setItem(LOCALSTORE_SIDE_STEP, side);
+  console.log(side);
+});
+
+// Отправляем данные для линковки с прошлыми данными
+socket.emit("connectGames", {
+  id: localStorage.getItem(LOCALSTORE_USER_ID),
+  room: localStorage.getItem(LOCALSTORE_ROOM_ID),
+});
+
+// socket.on("connectGames", (data) => {
+//   let text = document.createElement("p");
+//   text.innerText = data;
+
+//   document.querySelector("#chat").append(text);
+//   console.log(data);
+// });
+
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 const animate = (time) => {
   playerControlls.update();
