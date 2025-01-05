@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/37276bd0-df80-4d2b-911c-7472e0808dd1)**The plan for the coming week**
+**The plan for the coming week**
 - Loading games
 - Sockets link **(Game of 2 users)**
 - Stats on game **(Count kills and other)**
@@ -24,8 +24,8 @@ Engine (**0.7.4**) ->
 P.S. **Before the release of 1.0 or 2.0**, depending on the circumstances, most of the functions will be aimed specifically at my task. After that, the engine will be upgraded to the ability to create different other simple ones
 
 **Actual release**
-![image](https://github.com/user-attachments/assets/7dc99aa3-4955-429f-a119-72a0bdfa43ce)
-![image](https://github.com/user-attachments/assets/1d22bc4e-0732-4726-87bb-16583b55a70a)
+![image](https://github.com/user-attachments/assets/db777f7d-dfbf-4a32-9573-63576bdc2dbf)
+![image](https://github.com/user-attachments/assets/815a4f06-53d3-49e6-9156-5d09ea53a408)
 
 
 
