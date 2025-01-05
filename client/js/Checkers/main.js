@@ -76,6 +76,8 @@ export const AnalysisVariateStep = async (
         } else if (
           gameArea[nextStepZ] &&
           gameArea[nextStepZ][nextStepX] &&
+          gameArea[nextStepZ + move.z] &&
+          gameArea[nextStepZ + move.z][nextStepX + move.x] &&
           gameArea[nextStepZ][nextStepX].object.type === "checkerPiece" &&
           gameArea[nextStepZ][nextStepX].object.side != object.side &&
           gameArea[nextStepZ + move.z][nextStepX + move.x].object.type === null

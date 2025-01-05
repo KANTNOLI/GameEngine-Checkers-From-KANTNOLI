@@ -174,7 +174,7 @@ socket.on("gameStepServer", (step) => {
     }
     console.log("end");
 
-    console.log(step.step);
+    console.log(gameArea);
   } else {
     console.log(`я `);
   }
