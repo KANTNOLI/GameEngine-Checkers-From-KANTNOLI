@@ -1,7 +1,10 @@
 **The plan for the coming week**
-- Loading games
-- Sockets link **(Game of 2 users)**
+- Beautiful code
+- fixing server bugs 
 - Stats on game **(Count kills and other)**
+- Graphics settings
+- Animations
+- Modes
 
 Installation (**1.0 release**) -> 
 - unpack to a convenient location      - (**require**)
