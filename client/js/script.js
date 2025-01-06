@@ -17,6 +17,7 @@ import { CellKill } from "./Checkers/CellKill.js";
 import { Render } from "./Checkers/main.js";
 
 import { GettingData } from "./Sockets/GettingData.js";
+import { ReadySend } from "./Sockets/ReadySend.js";
 
 // получаем массив для игры, карту игры [{{},{},{}, ...}, ...]
 let gameArea = await fetch("/api/board/default").then((res) => res.json());
@@ -85,6 +86,7 @@ socket.on("connect", () => {
 });
 
 GettingData(scene, gameArea, socket, removeCells);
+ReadySend(socket);
 
 // Отправляем данные для линковки с прошлыми данными
 socket.emit("connectGames", {

@@ -49,15 +49,15 @@ app.get("/api/game/online", (_, res) => {
 
 io.on("connection", (socket) => {
   users[socket.id] = {
-    nickname: "Anonymous", // get after start game
+    nickname: null,
     game: {
-      play: false, // status, play or not
-      side: null, // side in game, black || white
-      enemyID: null, // id enemy
+      play: false,
+      side: null,
+      enemyID: null,
     },
     room: {
       roomID: null,
-      owner: false, // owner or no
+      owner: false,
     },
   };
 
