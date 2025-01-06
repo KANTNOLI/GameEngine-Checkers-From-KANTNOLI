@@ -1,7 +1,13 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+
 const cors = require("cors");
+
+const LobbyCreate = require("./Sockets/LobbyCreate");
+const LobbyJoin = require("./Sockets/LobbyJoin");
+const Game = require("./Sockets/Game");
+
 const io = require("socket.io")(null, {
   cors: {
     origin: "*",
@@ -14,12 +20,10 @@ let users = {};
 
 const app = express();
 
+// app
+
 app.use(cors());
 app.use(express.static(path.join(__dirname, "../client")));
-
-app.use((req, res, next) => {
-  next();
-});
 
 app.get("/api/board/default", (_, res) => {
   res
@@ -41,12 +45,8 @@ app.get("/api/game/online", (_, res) => {
   res.status(200).end(JSON.stringify(online), "utf-8");
 });
 
-app.listen(1000, () => {
-  console.log(`http://localhost:1000`);
-  console.log(`http://localhost:1000/game`);
-});
-
 // sockets
+
 io.on("connection", (socket) => {
   users[socket.id] = {
     nickname: "Anonymous", // get after start game
@@ -64,106 +64,11 @@ io.on("connection", (socket) => {
   online++;
   io.emit("online", online);
 
-  // LOBBY - CREATE ROOM PART {FOR OWNER}
-  socket.on("createRoom", (roomParam) => {
-    // roomParam is  --->
-    // {
-    //   userID: string,
-    //   ownerID: string,
-    //   room: string,
-    //   owner: string,
-    //   side: string
-    // }
-    socket.join(roomParam.room);
-
-    users[socket.id].nickname = roomParam.owner;
-    users[socket.id].room.owner = true;
-    users[socket.id].room.roomID = roomParam.room;
-    users[socket.id].game.side = roomParam.side;
-
-    rooms[roomParam.room] = roomParam;
-    rooms[roomParam.room].serverOSave = users[socket.id];
-    // notification for render rooms
-    io.emit("newRoom", roomParam);
-  });
-
-  // LOBBY - JOIN ROOM PART {FOR PLAYER}
-  socket.on("joinRoom", (joinParam) => {
-    socket.join(joinParam.roomID);
-
-    users[socket.id].nickname = joinParam.nickname;
-    users[socket.id].game.side = joinParam.side;
-    users[socket.id].game.enemyID = joinParam.owner;
-    users[socket.id].room.roomID = joinParam.roomID;
-    users[socket.id].room.owner = false;
-
-    rooms[joinParam.roomID].serverPSave = users[socket.id];
-    rooms[joinParam.roomID].player = joinParam.nickname;
-    users[joinParam.owner].game.enemyID = socket.id;
-    rooms[joinParam.roomID].userID = socket.id;
-    // создаем комнату, кидаем ид румы чтобы потом слинковать и отправляем на /game
-    // console.log(users);
-
-    io.to(joinParam.roomID).emit("gameStart", joinParam.roomID);
-  });
-
-  ///
-
-  //
-
-  //
-  //
-  //
-
-  socket.on("connectGames", (oldUserParam) => {
-    // id: 'O4jZwsokJ5tJN6hSAAAF'
-    // room: 'room name'
-
-    if (rooms[oldUserParam.room].ownerID === oldUserParam.id) {
-      rooms[oldUserParam.room].ownerID = socket.id;
-      users[socket.id] = rooms[oldUserParam.room].serverOSave;
-    } else {
-      rooms[oldUserParam.room].userID = socket.id;
-      users[socket.id] = rooms[oldUserParam.room].serverPSave;
-    }
-    users[socket.id].game.play = true;
-    socket.join(oldUserParam.room);
-
-    io.to(oldUserParam.room).emit("gamePlayersSides", {
-      ownerID: rooms[oldUserParam.room].ownerID,
-      ownerSide: rooms[oldUserParam.room].side,
-      playerID: rooms[oldUserParam.room].userID,
-      playerSide: rooms[oldUserParam.room].side === "white" ? "black" : "white",
-    });
-  });
-
-  socket.on("gameReady", (id) => {
-    //H771SsdxAwhvMQkrAAAN
-
-    users[socket.id].game.play = true;
-  });
-
-  socket.on("gameStep", (step) => {
-    //   room: 'room name',
-    //   autor: 'CAi-FmsKIg-MBzOCAAAP',
-    //   step:
-    //     type: 'kill',
-    //     side: 'white',
-    //     activePosition: { x: 4, z: 0 },
-    //     positionKill: { x: 3, z: 1 },
-    //     position: { x: 2, z: 2 },
-    //     queen: false
-
-    rooms[step.room].motion =
-      rooms[step.room].motion === "white" ? "black" : "white";
-    io.to(step.room).emit("gameStepQueue", rooms[step.room].motion);
-    io.to(step.room).emit("gameStepServer", step);
-  });
+  LobbyCreate(io, socket, users, rooms);
+  LobbyJoin(io, socket, users, rooms);
+  Game(io, socket, users, rooms);
 
   socket.on("disconnect", (_) => {
-    console.log(rooms);
-    console.log(users);
-
     online--;
     io.emit("online", online);
 
@@ -174,7 +79,13 @@ io.on("connection", (socket) => {
   });
 });
 
-// я видел вариант с обьеденением под 1 порт, но так мне больше нравится
+// start
+
+app.listen(1000, () => {
+  console.log(`http://localhost:1000`);
+  console.log(`http://localhost:1000/game`);
+});
+
 io.listen(3000, () => {
   console.log(`http://localhost:3000`);
 });
