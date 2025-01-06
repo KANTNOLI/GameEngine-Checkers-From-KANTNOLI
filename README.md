@@ -1,6 +1,4 @@
 **The plan for the coming week**
-- Beautiful code
-- fixing server bugs 
 - Stats on game **(Count kills and other)**
 - Graphics settings
 - Animations
