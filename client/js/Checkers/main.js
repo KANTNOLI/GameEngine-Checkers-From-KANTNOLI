@@ -26,7 +26,8 @@ export const AnalysisVariateStep = async (
   removeCells,
   onlyKills = false,
   playerSideStep,
-  playerSide
+  playerSide,
+  socket
 ) => {
   if (object.type === "checkerPiece" && playerSide === object.side) {
     // Тут мы берем направление и далее работаем с ним
@@ -113,7 +114,7 @@ export const AnalysisVariateStep = async (
       },
       queen: object.original.metaData.object.queen,
     };
-    StepSend(saveInfo);
+    StepSend(saveInfo, socket);
     CellStep(scene, gameArea, position, saveInfo);
   } else if (object.type === "killer") {
     // в случае нажатия на красную пешку
@@ -133,17 +134,21 @@ export const AnalysisVariateStep = async (
       queen: object.original.metaData.object.queen,
     };
 
-    StepSend(saveInfo);
+    StepSend(saveInfo, socket);
     CellKill(scene, gameArea, position, saveInfo, removeCells, true);
   }
   return false;
 };
 
-export const Render = (scene, gameArea, activeCell, removeCells) => {
+export const Render = (scene, gameArea, activeCell, removeCells, socket) => {
   // После выбора пешки, очищаем прошлую разметку
   // и рисуем новую
   let playerSideStep = localStorage.getItem(LOCALSTORE_SIDE_STEP);
   let playerSide = localStorage.getItem(LOCALSTORE_SIDE);
+
+  console.log(`123`, 123);
+  socket.emit("test", "WROKWORORWOK");
+  console.log(`123`, 123);
 
   ClearRemoveCells(scene, removeCells);
 
@@ -157,13 +162,10 @@ export const Render = (scene, gameArea, activeCell, removeCells) => {
       removeCells,
       false,
       playerSideStep,
-      playerSide
+      playerSide,
+      socket
     );
   }
-
-  // console.log(playerSideStep);
-  // console.log(playerSide);
-  // console.log(playerSideStep == playerSide);
 
   return 1;
 };

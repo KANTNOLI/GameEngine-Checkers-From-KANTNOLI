@@ -116,6 +116,9 @@ io.on("connection", (socket) => {
   //
 
   socket.on("connectGames", (oldUserParam) => {
+    // id: 'O4jZwsokJ5tJN6hSAAAF'
+    // room: 'room name'
+
     if (rooms[oldUserParam.room].ownerID === oldUserParam.id) {
       rooms[oldUserParam.room].ownerID = socket.id;
       users[socket.id] = rooms[oldUserParam.room].serverOSave;
@@ -135,23 +138,32 @@ io.on("connection", (socket) => {
   });
 
   socket.on("gameReady", (id) => {
-    users[id].game.play = true;
+    //H771SsdxAwhvMQkrAAAN
+
+    users[socket.id].game.play = true;
   });
 
   socket.on("gameStep", (step) => {
-    console.log(step.autor);
-    console.log(step.room);
+    //   room: 'room name',
+    //   autor: 'CAi-FmsKIg-MBzOCAAAP',
+    //   step:
+    //     type: 'kill',
+    //     side: 'white',
+    //     activePosition: { x: 4, z: 0 },
+    //     positionKill: { x: 3, z: 1 },
+    //     position: { x: 2, z: 2 },
+    //     queen: false
+
     rooms[step.room].motion =
       rooms[step.room].motion === "white" ? "black" : "white";
-
-    console.log(1);
     io.to(step.room).emit("gameStepQueue", rooms[step.room].motion);
-    console.log(2);
     io.to(step.room).emit("gameStepServer", step);
-    console.log(3);
   });
 
   socket.on("disconnect", (_) => {
+    console.log(rooms);
+    console.log(users);
+
     online--;
     io.emit("online", online);
 

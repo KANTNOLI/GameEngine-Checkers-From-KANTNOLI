@@ -10,7 +10,7 @@ export const ModelsLoader = async (
   scene,
   path = "models/error.glb",
   position = { x: 0, y: 0, z: 0 },
-  shadow = { casting: true, receiving: true },
+  shadow = { casting: false, receiving: false },
   scale = { width: 1, height: 1, length: 1 },
   looksAt = null,
   controll = null,

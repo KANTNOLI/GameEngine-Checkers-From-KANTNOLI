@@ -7,7 +7,8 @@ export const CellKill = (
   position,
   saveInfo,
   removeCells,
-  skip = false
+  skip = false,
+  socket
 ) => {
   let cell = CellStep(scene, gameArea, position, saveInfo);
 
@@ -30,7 +31,10 @@ export const CellKill = (
       cell.metaData.position,
       cell.metaData.object,
       removeCells,
-      true
+      true,
+      localStorage.getItem(LOCALSTORE_SIDE_STEP),
+      localStorage.getItem(LOCALSTORE_SIDE),
+      socket
     );
   }
 };
