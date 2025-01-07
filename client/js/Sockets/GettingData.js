@@ -3,9 +3,13 @@ import { CellStep } from "../Checkers/CellStep.js";
 
 const LOCALSTORE_USER_ID = "OLD_USER_ID";
 const LOCALSTORE_USER_ACTIVE_ID = "USER_ID";
+
 const LOCALSTORE_SIDE_STEP = "SIDE_STEP";
 const LOCALSTORE_SIDE = "SIDE";
 const LOCALSTORE_ROOM_ID = "ROOM_ID";
+
+const LOCALSTORE_COUNT_W = "COUNT_W";
+const LOCALSTORE_COUNT_B = "COUNT_B";
 
 export const GettingData = (scene, gameArea, socket, removeCells) => {
   // При подключении к сервер и загрузки самой игры
@@ -24,10 +28,18 @@ export const GettingData = (scene, gameArea, socket, removeCells) => {
   socket.on("gameStepServer", (step) => {
     if (step.autor != socket.id) {
       if (step.step.type === "other") {
-        console.log("step");
-
         CellStep(scene, gameArea, step.step.activePosition, step.step);
       } else {
+        step.step.side === "white"
+          ? localStorage.setItem(
+              LOCALSTORE_COUNT_B,
+              +localStorage.getItem(LOCALSTORE_COUNT_B) - 1
+            )
+          : localStorage.setItem(
+              LOCALSTORE_COUNT_W,
+              +localStorage.getItem(LOCALSTORE_COUNT_W) - 1
+            );
+
         CellKill(
           scene,
           gameArea,

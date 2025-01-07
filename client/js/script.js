@@ -25,9 +25,13 @@ let gameArea = await fetch("/api/board/default").then((res) => res.json());
 // удобнее хранить по строчке в ключе
 const LOCALSTORE_USER_ID = "OLD_USER_ID";
 const LOCALSTORE_USER_ACTIVE_ID = "USER_ID";
+
 const LOCALSTORE_SIDE_STEP = "SIDE_STEP";
 const LOCALSTORE_SIDE = "SIDE";
 const LOCALSTORE_ROOM_ID = "ROOM_ID";
+
+const LOCALSTORE_COUNT_W = "COUNT_W";
+const LOCALSTORE_COUNT_B = "COUNT_B";
 
 // по умолчанию первый ход за белыми
 localStorage.setItem(LOCALSTORE_SIDE_STEP, "white");
@@ -43,6 +47,10 @@ ModelsFullRender(scene, camera, LigthingFullRender(scene), playerControlls);
 
 // загружаем шашки для игры
 LoadCheckers(scene, gameArea);
+console.log(
+  +localStorage.getItem(LOCALSTORE_COUNT_W) +
+    +localStorage.getItem(LOCALSTORE_COUNT_B)
+);
 
 // создаем подключение т.к. после этой строки онно
 const socket = io("http://localhost:3000");

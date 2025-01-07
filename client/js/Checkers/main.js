@@ -10,6 +10,9 @@ import { StepSend } from "../Sockets/StepSend.js";
 const LOCALSTORE_SIDE_STEP = "SIDE_STEP";
 const LOCALSTORE_SIDE = "SIDE";
 
+const LOCALSTORE_COUNT_W = "COUNT_W";
+const LOCALSTORE_COUNT_B = "COUNT_B";
+
 let directs = [
   { x: 1, z: -1, side: "white" },
   { x: -1, z: -1, side: "white" },
@@ -135,6 +138,17 @@ export const AnalysisVariateStep = async (
     };
 
     StepSend(saveInfo, socket);
+
+    saveInfo.side === "white"
+      ? localStorage.setItem(
+          LOCALSTORE_COUNT_B,
+          +localStorage.getItem(LOCALSTORE_COUNT_B) - 1
+        )
+      : localStorage.setItem(
+          LOCALSTORE_COUNT_W,
+          +localStorage.getItem(LOCALSTORE_COUNT_W) - 1
+        );
+
     CellKill(scene, gameArea, position, saveInfo, removeCells, true);
   }
   return false;
@@ -145,10 +159,6 @@ export const Render = (scene, gameArea, activeCell, removeCells, socket) => {
   // и рисуем новую
   let playerSideStep = localStorage.getItem(LOCALSTORE_SIDE_STEP);
   let playerSide = localStorage.getItem(LOCALSTORE_SIDE);
-
-  console.log(`123`, 123);
-  socket.emit("test", "WROKWORORWOK");
-  console.log(`123`, 123);
 
   ClearRemoveCells(scene, removeCells);
 
