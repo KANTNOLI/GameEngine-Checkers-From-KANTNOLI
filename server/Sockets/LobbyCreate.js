@@ -20,10 +20,7 @@ const LobbyCreate = (io, socket, users, rooms) => {
     users[socket.id].game.side = roomParam.side;
 
     rooms[roomParam.room] = Object.assign(Object.create(null), roomParam);
-    rooms[roomParam.room].serverOSave = Object.assign(
-      Object.create(null),
-      users[socket.id]
-    );
+    rooms[roomParam.room].serverOSave = users[socket.id] || Object.create(null);
 
     io.emit("newRoom", roomParam);
   });
