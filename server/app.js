@@ -2,11 +2,19 @@ const express = require("express");
 const path = require("path");
 const fs = require("fs");
 
+const rateLimit = require("express-rate-limit");
 const cors = require("cors");
 
 const LobbyCreate = require("./Sockets/LobbyCreate");
 const LobbyJoin = require("./Sockets/LobbyJoin");
 const Game = require("./Sockets/Game");
+
+const limit = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: "Слишком много запросов саси бибу",
+  standardHeaders: true,
+});
 
 const io = require("socket.io")(null, {
   cors: {
@@ -22,6 +30,7 @@ const app = express();
 
 // app
 
+app.use(limit);
 app.use(cors());
 app.use(express.static(path.join(__dirname, "../client")));
 
