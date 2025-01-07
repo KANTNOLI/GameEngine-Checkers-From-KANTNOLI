@@ -20,7 +20,18 @@ const LobbyCreate = (io, socket, users, rooms) => {
     users[socket.id].game.side = roomParam.side;
 
     rooms[roomParam.room] = Object.assign(Object.create(null), roomParam);
-    rooms[roomParam.room].serverOSave = users[socket.id] || Object.create(null);
+
+    rooms[roomParam.room].serverOSave = Object.create(null);
+    rooms[roomParam.room].serverOSave.nickname = users[socket.id].nickname;
+    rooms[roomParam.room].serverOSave.game = {
+      play: users[socket.id].game.play || false,
+      side: users[socket.id].game.side || null,
+      enemyID: users[socket.id].game.enemyID || null,
+    };
+    rooms[roomParam.room].serverOSave.room = {
+      roomID: users[socket.id].room.roomID || null,
+      owner: users[socket.id].room.owner || false,
+    };
 
     io.emit("newRoom", roomParam);
   });
