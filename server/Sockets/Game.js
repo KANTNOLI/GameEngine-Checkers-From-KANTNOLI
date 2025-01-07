@@ -38,6 +38,9 @@ const Game = (io, socket, users, rooms) => {
     //     position: { x: 2, z: 2 },
     //     queen: false
 
+    if (step.room === '__proto__' || step.room === 'constructor' || step.room === 'prototype') {
+      return; // Reject dangerous keys
+    }
     rooms[step.room].motion =
       rooms[step.room].motion === "white" ? "black" : "white";
     io.to(step.room).emit("gameStepQueue", rooms[step.room].motion);
