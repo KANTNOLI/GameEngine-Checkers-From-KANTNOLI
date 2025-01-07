@@ -1,7 +1,6 @@
 **The plan for the coming week**
-- **Statistics**
-- **Server protection**
--** Completion of this project**, creation of a copy and **work specifically on the engine**
+- Plan?
+
 
 Installation (**1.0 release**) -> 
 - unpack to a convenient location      - (**require**)
