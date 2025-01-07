@@ -20,6 +20,9 @@ const LobbyCreate = (io, socket, users, rooms) => {
     users[socket.id].room.roomID = roomParam.room;
     users[socket.id].game.side = roomParam.side;
 
+    if (roomParam.room === '__proto__' || roomParam.room === 'constructor' || roomParam.room === 'prototype') {
+      return socket.emit('error', 'Invalid room name');
+    }
     rooms[roomParam.room] = Object.assign(Object.create(null), roomParam);
 
     rooms[roomParam.room].serverOSave = Object.assign(Object.create(null), {
