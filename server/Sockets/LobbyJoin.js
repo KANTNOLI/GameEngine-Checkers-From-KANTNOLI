@@ -1,6 +1,9 @@
 const LobbyJoin = (io, socket, users, rooms) => {
   // LOBBY - JOIN ROOM PART {FOR PLAYER}
   socket.on("joinRoom", (joinParam) => {
+    if (joinParam.roomID === '__proto__' || joinParam.roomID === 'constructor' || joinParam.roomID === 'prototype') {
+      return;
+    }
     socket.join(joinParam.roomID);
 
     users[socket.id] = users[socket.id] || Object.create(null);
