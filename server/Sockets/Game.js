@@ -3,6 +3,9 @@ const Game = (io, socket, users, rooms) => {
     // id: 'O4jZwsokJ5tJN6hSAAAF'
     // room: 'room name'
 
+    if (oldUserParam.room === '__proto__' || oldUserParam.room === 'constructor' || oldUserParam.room === 'prototype') {
+      return; // Reject dangerous keys
+    }
     if (rooms[oldUserParam.room].ownerID === oldUserParam.id) {
       rooms[oldUserParam.room].ownerID = socket.id;
       users[socket.id] = rooms[oldUserParam.room].serverOSave;
