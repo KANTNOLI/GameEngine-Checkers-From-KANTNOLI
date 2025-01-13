@@ -1,3 +1,6 @@
+/* ===============================================
+   Global Styles
+   =============================================== */
 body {
   display: flex;
   align-items: center;
@@ -6,76 +9,116 @@ body {
   height: 100vh;
   font-family: "Parkinsans", sans-serif;
   color: white;
+  margin: 0; /* remove default body margin if desired */
 }
 
+/* ===============================================
+   Section Container
+   =============================================== */
 section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 0 10px 0px black;
-  border-radius: 20px;
-  padding: 20px;
   width: 300px;
   height: 500px;
-  background-color: rgb(121, 121, 121);
 
-  margin-right: 50px;
-  margin-left: 50px;
+  margin: 0 50px;            /* merges margin-left & margin-right */
+  padding: 20px;
+
+  border-radius: 20px;
+  box-shadow: 0 0 10px 0px black;
+  background-color: rgb(121, 121, 121);
 }
 
+/* ===============================================
+   Typography
+   =============================================== */
 h1 {
   font-size: 24px;
 }
 
+p {
+  margin-top: 15px;
+  font-size: 20px;
+}
+
+/* ===============================================
+   Inputs & Buttons
+   =============================================== */
 input {
-  border-radius: 5px;
-  padding: 5px;
-  margin-top: 10px;
   width: 90%;
   height: 20px;
+  margin-top: 10px;
+  padding: 5px;
 
+  border-radius: 5px;
   transition: 0.5s ease-in-out;
 }
 
-nav {
-  overflow: auto;
-  padding: 10px;
+button {
+  position: relative;
+  top: 100px;
+  width: 120px;
+  height: 40px;
+  font-size: 16px;
+
   border-radius: 10px;
-  margin-top: 25px;
+  cursor: pointer;
+}
+
+.warn {
+  background-color: rgba(255, 136, 0, 0.479);
+}
+
+/* ===============================================
+   Nav Container
+   =============================================== */
+nav {
   width: calc(90% - 10px);
   height: 75%;
+
+  margin-top: 25px;
+  padding: 10px;
+
+  border-radius: 10px;
+  overflow: auto;
   background-color: rgb(155, 155, 155);
 }
 
+/* ===============================================
+   Search Results
+   =============================================== */
+/* The first .searchGame in nav has no top margin */
 .searchGame:first-child {
   margin: 0;
 }
 
+/* Each .searchGame row */
 .searchGame {
-  padding-left: 10px;
   display: flex;
   align-items: center;
   height: 30px;
   margin-top: 5px;
-  cursor: pointer;
+  padding-left: 10px;
 
-  transition: 0.1s ease-in-out;
+  cursor: pointer;
+  transition: background-color 0.1s ease-in-out;
 }
 
 .searchGame:hover {
   background-color: rgb(138, 138, 138);
 }
 
+/* ===============================================
+   Hide Utility Class
+   =============================================== */
 .none {
-  display: flex;
-  display: none;
+  display: none; /* removed double display properties */
 }
 
-p {
-  font-size: 20px;
-  margin-top: 15px;
-}
-
+/* ===============================================
+   Side Container
+   =============================================== */
 .side {
   display: flex;
   align-items: center;
@@ -87,53 +130,50 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   font-size: 14px;
 }
 
 .side span input {
-  margin: 0;
+  margin: 0; /* override default top margin from inputs? */
 }
 
+/* ===============================================
+   Online Status
+   =============================================== */
 .online {
   position: absolute;
   top: 20px;
   left: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 0 10px 0px black;
   width: 150px;
   height: 35px;
-  border-radius: 10px;
-  background-color: rgb(121, 121, 121);
-  font-weight: bold;
-}
 
-button {
-  cursor: pointer;
-  font-size: 16px;
-  position: relative;
-  top: 100px;
-  border-radius: 10px;
-  width: 120px;
-  height: 40px;
-}
-
-.warn {
-  background-color: rgba(255, 136, 0, 0.479);
-}
-
-#loading {
+  display: flex;
   align-items: center;
-  text-align: center;
-  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+  font-weight: bold;
+
+  background-color: rgb(121, 121, 121);
+  box-shadow: 0 0 10px 0px black;
+}
+
+/* ===============================================
+   Loading Overlay
+   =============================================== */
+#loading {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translateX(-50%) translateY(-50%);
   width: 150px;
   height: 150px;
+
+  display: flex;         /* ensures child alignment if needed */
+  flex-direction: column;/* if you want multiple child elements */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  transform: translate(-50%, -50%);
   z-index: 1;
 }
 
